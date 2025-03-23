@@ -1,0 +1,35 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Username=tests;Password=test12345;Database=Users
+      - Mongo__ConnectionString=mongodb://mongo:27017
+      - Mongo__Database=mydb
+    depends_on:
+      - postgres
+      - mongo
+
+  postgres:
+    image: postgres:17.4
+    environment:
+      POSTGRES_USER: tests
+      POSTGRES_PASSWORD: test12345
+      POSTGRES_DB: Users
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  postgres_data:
+  mongo_data:
