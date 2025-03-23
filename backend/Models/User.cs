@@ -17,7 +17,4 @@ public class User
     [Required]
     [DataType(DataType.Password)]
     public string Password { get; set; }
-
-    [Required]
-    public uint CostUsers { get; set; }
 }
