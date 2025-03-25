@@ -2,6 +2,8 @@ using backend.Data;
 using backend.DTO;
 using backend.Models;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace backend.Services;
 
 public class UserServices
@@ -34,8 +36,9 @@ public class UserServices
     public User? GetUserById(Guid userSearch) =>
         _context.Users.FirstOrDefault(user => user.Id == userSearch);
 
-    public UserDTO Update(Guid userId, User newUser)
+    public async Task<UserDTO> Update(Guid userId, User newUser)
     {
+        
         UserDTO userDTO = new UserDTO
         {
             Id = null,
@@ -46,14 +49,18 @@ public class UserServices
         if (user == null)
             return userDTO;
 
+        _context.Users.Where(u => u == newUser).ExecuteUpdate(null);
+        await _context.SaveChangesAsync();
 
         return userDTO;
     }
 
-    public bool DeleteUser(Guid userId) // refatorar no futuro
+    public async Task<bool> DeleteUser(Guid userId) 
     {
         User user = GetUserById(userId);
 
+        _context.Users.Where(n => n == user).ExecuteDelete();
+        await _context.SaveChangesAsync();
         if (user == null)
             return false;
 
