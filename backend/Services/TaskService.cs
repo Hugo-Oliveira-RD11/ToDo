@@ -21,23 +21,35 @@ public class TaskService
         _tasksUsers = mongoDatabase.GetCollection<TasksUsers>(tasksDatabase.Value.DatabaseName);
     }
 
-    public async Task<List<TasksUsersDTO>> GetAsync()
+    public async Task<List<TasksUsersDTO>> GetAllTasksByUser(Guid userId)
     {
-        var queryableCollection = _tasksUsers.AsQueryable();
-        var tasksDTO = await from task in queryableCollection select  new TasksUsersDTO()
+
+        var tasksDTO =_tasksUsers.AsQueryable().Where(t => t.UserId == userId).Select(t => new TasksUsersDTO
         {
-            Id = task.Id,
-            Objetivo = task.Objetivo,
-            Notas = task.Notas,
-            Feito = task.Feito,
-            Category = task.Category,
-            ADayToComplet = task.ADayToComplet
-        };
+            Id = t.Id,
+            Feito = t.Feito,
+            Notas = t.Notas,
+            Objetivo = t.Objetivo,
+            ADayToComplet = t.ADayToComplet,
+            Category = t.Category
+        }).ToList();
+
         return tasksDTO;
     }
 
-    public async Task<TasksUsers?> GetAsync(string id) =>
-        await _tasksUsers.Find(x => x.Id == id).FirstOrDefaultAsync();
+    public TasksUsersDTO GetTaskByUser(string id) {
+        var taskDTO = _tasksUsers.AsQueryable().Where(t => t.Id == id).Select(t => new TasksUsersDTO{
+            Id = t.Id,
+            Feito = t.Feito,
+            Notas = t.Notas,
+            Objetivo = t.Objetivo,
+            ADayToComplet = t.ADayToComplet,
+            Category = t.Category
+            }).FirstOrDefault();
+
+        return taskDTO;
+        
+    }
 
     public async Task CreateAsync(TasksUsers newTask) =>
         await _tasksUsers.InsertOneAsync(newTask);
