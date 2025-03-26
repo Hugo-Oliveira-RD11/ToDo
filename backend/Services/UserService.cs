@@ -1,16 +1,15 @@
 using backend.Data;
 using backend.DTO;
 using backend.Models;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services;
 
-public class UserServices
+public class UserService
 {
     private readonly UserContext _context;
 
-    public UserServices(UserContext context)
+    public UserService(UserContext context)
     {
         _context = context;
     }
