@@ -1,5 +1,7 @@
 using backend.Data;
 using backend.Models;
+using backend.Services;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<UserContext>(
     op => op.UseNpgsql(builder.Configuration.GetConnectionString("UserConnection"))
 );
+builder.Services.Configure<TasksUsersDatabaseSettings>(
+    builder.Configuration.GetSection("TasksConnection"));
+
+builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<UserService>();
+
 
 
 var app = builder.Build();
