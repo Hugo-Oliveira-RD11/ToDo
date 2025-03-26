@@ -17,7 +17,8 @@ builder.Services.AddDbContext<UserContext>(
 builder.Services.Configure<TasksUsersDatabaseSettings>(
     builder.Configuration.GetSection("TasksConnection"));
 
-builder.Services.AddSingleton<TaskService>();
+builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<UserService>();
 
 
 
