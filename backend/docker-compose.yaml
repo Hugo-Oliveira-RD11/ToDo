@@ -1,5 +1,5 @@
 services:
-  web:
+  app:
     build: .
     ports:
       - "8000:5000"
@@ -11,6 +11,8 @@ services:
     depends_on:
       - postgres
       - mongo
+    networks:
+      - backend
 
   postgres:
     image: postgres:17.4
@@ -22,6 +24,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
 
   mongo:
     image: mongo:latest
@@ -29,7 +33,12 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - backend
 
 volumes:
   postgres_data:
   mongo_data:
+
+networks:
+  backend:
