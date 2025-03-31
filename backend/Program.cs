@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<UserContext>(
-    op => op.UseNpgsql(builder.Configuration.GetConnectionString("UserConnection"))
+    op => op.UseNpgsql(builder.Configuration["ConnectionsDB:UserConnection"])
 );
 builder.Services.Configure<TasksUsersDatabaseSettings>(
     builder.Configuration.GetSection("TasksConnection"));

@@ -9,7 +9,7 @@ COPY . ./
 RUN dotnet restore
 
 # Compila e publica em Release
-RUN dotnet publish -c Release -o /App/out
+RUN dotnet publish -c Debug -o /App/out
 
 # Etapa de runtime
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
