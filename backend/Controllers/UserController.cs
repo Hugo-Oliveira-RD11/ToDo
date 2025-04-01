@@ -17,32 +17,33 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<UserDTO>> CreateUser(User newUser)
+    public async Task<ActionResult<UserDTO>> CreateUser([FromBody] User newUser)
     {
-        var userDTO = _userService.CreateUser(newUser);
+        var userDTO = await _userService.CreateUser(newUser);
         return Ok(userDTO);
     }
-    [HttpDelete]
-    public async Task<ActionResult> DeleteUserById(Guid deleteUser)
-    {
-        var userDTO = _userService.GetUserById(deleteUser);
-        if(userDTO == null)
-            return NotFound(userDTO);
 
-        try{
-            bool complet = await _userService.DeleteUserById(deleteUser);
-            return Ok();
-        }catch(Exception e){
+    [HttpDelete]
+    public ActionResult DeleteUserById([FromQuery] Guid deleteUser)
+    {
+        try
+        {
+            bool complet = _userService.DeleteUserById(deleteUser);
+            return Ok(complet);
+        }
+        catch (Exception e)
+        {
             return StatusCode(500, $"internal error: {e}");
         }
     }
 
     [HttpPatch]
-    public async Task<ActionResult<UserDTO>> UpdateUser(Guid userId, User updatedUser){
-        var response =  _userService.UpdateUserById(userId, updatedUser);
-        if(response == null)
+    public async Task<ActionResult<UserDTO>> UpdateUser([FromQuery] Guid userId, [FromBody] User updatedUser)
+    {
+        UserDTO? response = await _userService.UpdateUserById(userId, updatedUser);
+        if (response == null)
             return StatusCode(404, "user dont exist");
-        return Ok();
+        return Ok(response);
     }
 
     // #if DEBUG
