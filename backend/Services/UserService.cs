@@ -65,14 +65,14 @@ public class UserService
         return userDTO;
     }
 
-    public async Task<bool> DeleteUserById(Guid userId) // atualizar no futuro para deletar todas as tasks do usuario!
+    public bool DeleteUserById(Guid userId) // atualizar no futuro para deletar todas as tasks do usuario!
     {
         User? user = GetUserById(userId);
-
-        _context.Users.Where(n => n == user).ExecuteDelete();
-        await _context.SaveChangesAsync();
         if (user == null)
             return false;
+
+        _context.Users.Remove(user);
+        _context.SaveChanges();
 
         return true;
     }
