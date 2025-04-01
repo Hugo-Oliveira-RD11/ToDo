@@ -48,6 +48,7 @@ public class UserService
         if (user == null)
             return null;
 
+        newUser.Password = PasswordService.PasswordGenerate(newUser.Password);
         user.Name = newUser.Name ?? user.Name;
         user.Email = newUser.Email ?? user.Email;
         user.Password = newUser.Password ?? user.Password;
