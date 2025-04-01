@@ -19,7 +19,7 @@ public class UserService
         user.Password = PasswordService.PasswordGenerate(user.Password);
 
 
-        var newUser = new User(GuidService.GuidGenerate())
+        var newUser = new User()
         {
             Name = user.Name,
             Email = user.Email,
