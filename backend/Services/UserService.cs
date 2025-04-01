@@ -76,18 +76,34 @@ public class UserService
 
         return true;
     }
-    #if DEBUG
-    public async Task<List<UserDTO>> GetAllUsers(int numberPage=10, int sizePage=4) =>
-        await _context.Users
+
+#if DEBUG
+    public UserDTO? GetUserDTOById(Guid userSearch) =>
+        _context.Users
         .Select(u => new UserDTO
         {
             Id = u.Id,
             Name = u.Name,
             Email = u.Email
         })
-        .Skip((numberPage - 1) * sizePage)
-        .Take(sizePage)
-        .ToListAsync();
-    #endif
+        .FirstOrDefault(user => user.Id == userSearch);
+
+    public async Task<List<UserDTO>> GetAllUsers(int numberPage, int sizePage)
+    {
+        var usersDTO = await _context.Users
+            .AsNoTracking()
+            .OrderBy(u => u.Id)
+            .Skip((numberPage - 1) * sizePage)
+            .Take(sizePage)
+            .Select(u => new UserDTO
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Email = u.Email
+            })
+            .ToListAsync();
+        return usersDTO;
+    }
+#endif
 
 }
