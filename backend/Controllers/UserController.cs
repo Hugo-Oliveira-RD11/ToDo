@@ -46,9 +46,20 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
-    // #if DEBUG
+#if DEBUG
     [HttpGet]
-    public async Task<ActionResult<List<UserDTO>>> DebugAllUsers() =>
-        await _userService.GetAllUsers();
-    // #endif
+    public async Task<ActionResult<List<UserDTO>>> GetAllUsersDebug(int numberPage=1,int sizePage=100)
+    {
+        var users = await _userService.GetAllUsers(numberPage, sizePage);
+        return Ok(users);
+    }
+
+    [HttpGet("{userID}")]
+    public ActionResult<UserDTO> GetUserDebug(Guid userID)
+    {
+        UserDTO? users = _userService.GetUserDTOById(userID);
+        return Ok(users);
+    }
+
+#endif
 }
