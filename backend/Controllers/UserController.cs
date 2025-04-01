@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controller;
 
-[Route("v1/[controller]")]
+[Route("v1/user")]
 [ApiController]
 public class UserController : ControllerBase
 {
