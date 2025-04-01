@@ -5,7 +5,7 @@ namespace backend.Models;
 public class User
 {
     [Required]
-    public Guid Id { get; set; }
+    public Guid Id { get; init;}
 
     [Required]
     public string? Name { get; set; }
@@ -17,4 +17,8 @@ public class User
     [Required]
     [DataType(DataType.Password)]
     public string Password { get; set; }
+
+    public User(Guid id){
+        this.Id = id;
+    }
 }
