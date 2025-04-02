@@ -4,7 +4,7 @@ using backend.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Controller;
+namespace backend.Controllers;
 
 [Route("v1/user")]
 [ApiController]
