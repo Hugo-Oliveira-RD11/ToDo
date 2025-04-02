@@ -8,19 +8,22 @@ namespace backend.Services;
 public class TaskService
 {
     private readonly IMongoCollection<TasksUsers> _tasksUsers;
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    private readonly UserService _userService;
-
-    public TaskService(
-        IOptions<TasksUsersDatabaseSettings> tasksDatabase, UserService userServices
-        )
+    public TaskService(IOptions<TasksUsersDatabaseSettings> tasksDatabase, IServiceScopeFactory scopeFactory)
     {
-        _userService = userServices;
+        if (tasksDatabase?.Value?.ConnectionString == null)
+            throw new ArgumentNullException(nameof(tasksDatabase.Value.ConnectionString), "MongoDB connection string is null.");
+
+        if (tasksDatabase?.Value?.DatabaseName == null)
+            throw new ArgumentNullException(nameof(tasksDatabase.Value.DatabaseName), "MongoDB database name is null.");
+
+        _scopeFactory = scopeFactory;
+
         var mongoConnection = new MongoClient(tasksDatabase.Value.ConnectionString);
         var mongoDatabase = mongoConnection.GetDatabase(tasksDatabase.Value.DatabaseName);
-        _tasksUsers = mongoDatabase.GetCollection<TasksUsers>(tasksDatabase.Value.DatabaseName);
+        _tasksUsers = mongoDatabase.GetCollection<TasksUsers>(tasksDatabase.Value.CollectionName);
     }
-
     public List<TasksUsersDTO> GetAllTasksByUser(Guid userId)
     {
 
