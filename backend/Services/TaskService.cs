@@ -1,6 +1,7 @@
 using backend.DTO;
 using backend.Models;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace backend.Services;
@@ -80,44 +81,69 @@ public class TaskService
         return listTask;
     }
 
-    public async Task<TasksUsersDTO?> CreateAsync(TasksUsers newTask)
+    public async Task<TasksUsersDTO?> CreateAsync(Guid userId, TasksUsers newTask)
     {
-        if(_userService.GetUserById(newTask.UserId) == null)
+        if (newTask == null)
+            throw new ArgumentNullException(nameof(newTask), "A tarefa não pode ser nula.");
+
+        if (userId == Guid.Empty)
+            throw new ArgumentException("UserId inválido.", nameof(userId));
+
+        using var scope = _scopeFactory.CreateScope();
+        var userContext = scope.ServiceProvider.GetRequiredService<UserService>();
+
+        if (userContext.GetUserById(userId) == null)
             return null;
 
-        await  _tasksUsers.InsertOneAsync(newTask);
-        var task = new TasksUsersDTO
-        {
-                Id = newTask.Id,
-                Feito = newTask.Feito,
-                Notas = newTask.Notas,
-                Objetivo = newTask.Objetivo,
-                ADayToComplet = newTask.ADayToComplet,
-                Category = newTask.Category
-        };
+        newTask.Id ??= ObjectId.GenerateNewId().ToString();
+        newTask.UserId = userId;
+        newTask.ADayToComplet ??= DateTime.UtcNow;
 
-        return task;
+        await _tasksUsers.InsertOneAsync(newTask);
+
+        return new TasksUsersDTO
+        {
+            Id = newTask.Id,
+            Feito = newTask.Feito,
+            Notas = newTask.Notas,
+            Objetivo = newTask.Objetivo,
+            ADayToComplet = newTask.ADayToComplet,
+            Category = newTask.Category
+        };
     }
 
-    public async Task<TasksUsersDTO?> UpdateAsync(string id, TasksUsers updatedTask)  
+    public async Task<TasksUsersDTO?> UpdateAsync(string id, TasksUsers updatedTask)
     {
-        if(_userService.GetUserById(updatedTask.UserId) == null)
+        using var scope = _scopeFactory.CreateScope();
+        var userContext = scope.ServiceProvider.GetRequiredService<UserService>();
+        if (userContext.GetUserById(updatedTask.UserId) == null)
             return null;
 
         await _tasksUsers.ReplaceOneAsync(x => x.Id == id, updatedTask);
 
         var task = new TasksUsersDTO
         {
-                Id = updatedTask.Id,
-                Feito = updatedTask.Feito,
-                Notas = updatedTask.Notas,
-                Objetivo = updatedTask.Objetivo,
-                ADayToComplet = updatedTask.ADayToComplet,
-                Category = updatedTask.Category
+            Id = updatedTask.Id,
+            Feito = updatedTask.Feito,
+            Notas = updatedTask.Notas,
+            Objetivo = updatedTask.Objetivo,
+            ADayToComplet = updatedTask.ADayToComplet,
+            Category = updatedTask.Category
         };
 
         return task;
     }
-    public async Task RemoveAsync(string id) => // nao vejo o que retornar
-        await _tasksUsers.DeleteOneAsync(x => x.Id == id);
+    public async Task<bool> RemoveAsync(string id)
+    {
+        try
+        {
+            await _tasksUsers.DeleteOneAsync(x => x.Id == id);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"error: {e}");
+            return false;
+        }
+    }
 }
