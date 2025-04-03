@@ -25,6 +25,7 @@ public class TaskService
         var mongoDatabase = mongoConnection.GetDatabase(tasksDatabase.Value.DatabaseName);
         _tasksUsers = mongoDatabase.GetCollection<TasksUsers>(tasksDatabase.Value.CollectionName);
     }
+
     public List<TasksUsersDTO> GetAllTasksByUser(Guid userId)
     {
 
@@ -39,14 +40,14 @@ public class TaskService
                 ADayToComplet = t.ADayToComplet,
                 Category = t.Category
             })
-            .OrderBy(t => t.Objetivo)
-            .ThenBy(t => t.Feito)
+            .OrderBy(t => t.Feito)
+            .ThenBy(t => t.Objetivo)
             .ToList();
 
         return listTask;
     }
 
-    public TasksUsersDTO GetTaskById(string id)
+    public TasksUsersDTO? GetTaskById(string id)
     {
         var listTask = _tasksUsers.AsQueryable().Where(t => t.Id == id).Select(t => new TasksUsersDTO
         {
@@ -61,10 +62,11 @@ public class TaskService
         return listTask;
 
     }
-    public List<TasksUsersDTO> GetAllTasksToday(Guid userId)
+
+    public List<TasksUsersDTO?> GetAllTasksToday(Guid userId)
     {
         var listTask = _tasksUsers.AsQueryable()
-            .Where(t => t.UserId == userId && t.ADayToComplet == DateTime.Today)
+            .Where(t => t.UserId == userId && t.ADayToComplet >= DateTime.Today && t.ADayToComplet < DateTime.Today.AddDays(1))
             .Select(t => new TasksUsersDTO
             {
                 Id = t.Id,
@@ -74,8 +76,8 @@ public class TaskService
                 ADayToComplet = t.ADayToComplet,
                 Category = t.Category
             })
-            .OrderBy(t => t.Objetivo)
-            .ThenBy(t => t.Feito)
+            .OrderBy(t => t.Feito)
+            .ThenBy(t => t.Objetivo)
             .ToList();
 
         return listTask;
@@ -114,16 +116,27 @@ public class TaskService
 
     public async Task<TasksUsersDTO?> UpdateAsync(string id, TasksUsers updatedTask)
     {
-        using var scope = _scopeFactory.CreateScope();
-        var userContext = scope.ServiceProvider.GetRequiredService<UserService>();
-        if (userContext.GetUserById(updatedTask.UserId) == null)
+        if(GetTaskById(id) == null) 
             return null;
 
-        await _tasksUsers.ReplaceOneAsync(x => x.Id == id, updatedTask);
+        using var scope = _scopeFactory.CreateScope();
+        var userContext = scope.ServiceProvider.GetRequiredService<UserService>();
+
+        if (userContext.GetUserById(updatedTask.UserId) == null)
+            return null;
+    
+        var updateDefinition = Builders<TasksUsers>.Update
+            .Set(t => t.Objetivo, updatedTask.Objetivo)
+            .Set(t => t.Notas, updatedTask.Notas)
+            .Set(t => t.Feito, updatedTask.Feito)
+            .Set(t => t.ADayToComplet, updatedTask.ADayToComplet)
+            .Set(t => t.Category, updatedTask.Category);
+
+        await _tasksUsers.UpdateOneAsync(x => x.Id == id, updateDefinition);
 
         var task = new TasksUsersDTO
         {
-            Id = updatedTask.Id,
+            Id = id,
             Feito = updatedTask.Feito,
             Notas = updatedTask.Notas,
             Objetivo = updatedTask.Objetivo,
@@ -133,11 +146,16 @@ public class TaskService
 
         return task;
     }
+
     public async Task<bool> RemoveAsync(string id)
     {
         try
         {
+            if(GetTaskById(id) == null)
+                return false;
+
             await _tasksUsers.DeleteOneAsync(x => x.Id == id);
+
             return true;
         }
         catch (Exception e)
