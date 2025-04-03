@@ -26,7 +26,7 @@ public class TaskService
         _tasksUsers = mongoDatabase.GetCollection<TasksUsers>(tasksDatabase.Value.CollectionName);
     }
 
-    public List<TasksUsersDTO> GetAllTasksByUser(Guid userId)
+    public List<TasksUsersDTO?> GetAllTasksByUser(Guid userId)
     {
 
         var listTask = _tasksUsers.AsQueryable()
@@ -45,6 +45,16 @@ public class TaskService
             .ToList();
 
         return listTask;
+    }
+
+    private TasksUsers? GetRealTaskById(string id)
+    {
+        var listTask = _tasksUsers.AsQueryable()
+            .Where(t => t.Id == id)
+            .FirstOrDefault();
+
+        return listTask;
+
     }
 
     public TasksUsersDTO? GetTaskById(string id)
@@ -114,15 +124,16 @@ public class TaskService
         };
     }
 
-    public async Task<TasksUsersDTO?> UpdateAsync(string id, TasksUsers updatedTask)
+    public async Task<TasksUsersDTO?> UpdateAsync(string id, TasksUsersDTO updatedTask)
     {
-        if(GetTaskById(id) == null) 
+        var oldTask = GetRealTaskById(id);
+        if(oldTask == null) 
             return null;
 
         using var scope = _scopeFactory.CreateScope();
         var userContext = scope.ServiceProvider.GetRequiredService<UserService>();
 
-        if (userContext.GetUserById(updatedTask.UserId) == null)
+        if (userContext.GetUserById(oldTask.UserId) == null)
             return null;
     
         var updateDefinition = Builders<TasksUsers>.Update

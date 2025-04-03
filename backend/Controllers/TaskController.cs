@@ -37,7 +37,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpPatch]
-    public async Task<ActionResult<TasksUsersDTO?>> UpdateAsync( string id, [FromBody] TasksUsers updatedTask) { // work
+    public async Task<ActionResult<TasksUsersDTO?>> UpdateAsync( string id, [FromBody] TasksUsersDTO updatedTask) { // work
         if( updatedTask == null)
             return null;
 
