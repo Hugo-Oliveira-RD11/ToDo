@@ -19,8 +19,12 @@ public class TaskController : ControllerBase
          _taskService.GetAllTasksByUser(userId);
 
     [HttpGet("{userId}")]
-    public TasksUsersDTO GetTaskById(string userId) =>
+    public TasksUsersDTO? GetTaskById(string userId) => // work
          _taskService.GetTaskById(userId);
+
+    [HttpGet("today/{userId}")]
+    public ActionResult<List<TasksUsersDTO?>> GetAllTasksTodayByUserId(Guid userId) => 
+         _taskService.GetAllTasksToday(userId);
 
     [HttpPost]
     public async Task<IActionResult> CreateAsync(Guid userId, [FromBody] TasksUsers task) // work
