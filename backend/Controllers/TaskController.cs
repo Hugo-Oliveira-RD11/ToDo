@@ -33,11 +33,16 @@ public class TaskController : ControllerBase
     }
 
     [HttpPatch]
-    public async Task<TasksUsersDTO?> UpdateAsync(string id, TasksUsers updatedTask) =>
-            await _taskService.UpdateAsync(id, updatedTask);
+    public async Task<ActionResult<TasksUsersDTO?>> UpdateAsync( string id, [FromBody] TasksUsers updatedTask) { // work
+        if( updatedTask == null)
+            return null;
+
+        var response = await _taskService.UpdateAsync(id, updatedTask);
+            return Ok(response);
+    }
 
     [HttpDelete]
-    public async Task<bool> DeleteAsync(string id)
+    public async Task<ActionResult<bool>> DeleteAsync([FromQuery] string id) //work
     {
         bool response = await _taskService.RemoveAsync(id);
         return response;
