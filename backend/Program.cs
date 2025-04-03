@@ -24,10 +24,21 @@ builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 
+
 using (var scope = app.Services.CreateScope())
 {
+    int maxRetries = 10, delayMilliseconds=5000;
+
     var db = scope.ServiceProvider.GetRequiredService<UserContext>();
-    db.Database.Migrate();
+    for(int i=0; i< maxRetries;i++ ){
+        try{
+            db.Database.Migrate();
+            break;
+        }
+        catch(Exception e){
+            Thread.Sleep(delayMilliseconds);
+        }
+    }
 }
 
 // Configure the HTTP request pipeline.
