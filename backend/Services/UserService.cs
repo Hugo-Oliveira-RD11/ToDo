@@ -17,16 +17,23 @@ public class UserService
     public async Task<UserDTO> CreateUser(User user)
     {
         user.Password = PasswordService.PasswordGenerate(user.Password);
-        user.Id = GuidService.GuidGenerate();
 
-        _context.Users.Add(user);
+
+        var newUser = new User()
+        {
+            Name = user.Name,
+            Email = user.Email,
+            Password = user.Password
+        };
+
+        _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
 
         UserDTO userDTO = new UserDTO
         {
-            Name = user.Name,
-            Email = user.Email,
-            Id = user.Id
+            Name = newUser.Name,
+            Email = newUser.Email,
+            Id = newUser.Id
         };
 
         return userDTO;
@@ -35,35 +42,68 @@ public class UserService
     public User? GetUserById(Guid userSearch) =>
         _context.Users.FirstOrDefault(user => user.Id == userSearch);
 
-    public async Task<UserDTO> Update(Guid userId, User newUser)
+    public async Task<UserDTO?> UpdateUserById(Guid userId, User newUser)
     {
-        
-        UserDTO userDTO = new UserDTO
-        {
-            Id = null,
-            Name = null,
-            Email = null
-        };
-        User user = GetUserById(userId);
+        User? user = GetUserById(userId);
         if (user == null)
-            return userDTO;
+            return null;
 
-        _context.Users.Where(u => u == newUser).ExecuteUpdate(null);
+        newUser.Password = PasswordService.PasswordGenerate(newUser.Password);
+        user.Name = newUser.Name ?? user.Name;
+        user.Email = newUser.Email ?? user.Email;
+        user.Password = newUser.Password ?? user.Password;
+
         await _context.SaveChangesAsync();
+
+        var userDTO = new UserDTO
+        {
+            Id = user.Id,
+            Name = newUser.Name ?? user.Name,
+            Email = newUser.Email ?? user.Email
+        };
 
         return userDTO;
     }
 
-    public async Task<bool> DeleteUser(Guid userId) 
+    public bool DeleteUserById(Guid userId) // atualizar no futuro para deletar todas as tasks do usuario!
     {
-        User user = GetUserById(userId);
-
-        _context.Users.Where(n => n == user).ExecuteDelete();
-        await _context.SaveChangesAsync();
+        User? user = GetUserById(userId);
         if (user == null)
             return false;
 
+        _context.Users.Remove(user);
+        _context.SaveChanges();
+
         return true;
     }
+
+#if DEBUG
+    public UserDTO? GetUserDTOById(Guid userSearch) =>
+        _context.Users
+        .Select(u => new UserDTO
+        {
+            Id = u.Id,
+            Name = u.Name,
+            Email = u.Email
+        })
+        .FirstOrDefault(user => user.Id == userSearch);
+
+    public async Task<List<UserDTO>> GetAllUsers(int numberPage, int sizePage)
+    {
+        var usersDTO = await _context.Users
+            .AsNoTracking()
+            .OrderBy(u => u.Id)
+            .Skip((numberPage - 1) * sizePage)
+            .Take(sizePage)
+            .Select(u => new UserDTO
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Email = u.Email
+            })
+            .ToListAsync();
+        return usersDTO;
+    }
+#endif
 
 }

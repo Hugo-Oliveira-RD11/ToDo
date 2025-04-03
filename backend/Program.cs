@@ -15,14 +15,20 @@ builder.Services.AddDbContext<UserContext>(
     op => op.UseNpgsql(builder.Configuration["ConnectionsDB:UserConnection"])
 );
 builder.Services.Configure<TasksUsersDatabaseSettings>(
-    builder.Configuration.GetSection("TasksConnection"));
+    builder.Configuration.GetSection("ConnectionsDB:TasksUsersDatabase"));
 
-builder.Services.AddScoped<TaskService>();
+builder.Services.AddSingleton<TaskService>();
 builder.Services.AddScoped<UserService>();
 
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<UserContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

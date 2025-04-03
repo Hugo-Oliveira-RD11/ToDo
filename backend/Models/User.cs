@@ -1,20 +1,23 @@
 using System.ComponentModel.DataAnnotations;
+using backend.Services;
 
 namespace backend.Models;
 
 public class User
 {
     [Required]
-    public Guid Id { get; set; }
+    public Guid Id { get; init;} = GuidService.GuidGenerate();
 
     [Required]
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [Required]
     [EmailAddress(ErrorMessage = "Este email nao e valido")]
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 
     [Required]
     [DataType(DataType.Password)]
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
+
+    public User(){} // teste para o EF
 }
