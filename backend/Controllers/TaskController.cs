@@ -15,7 +15,7 @@ public class TaskController : ControllerBase
         _taskService = taskService;
     }
     [HttpGet]
-    public List<TasksUsersDTO> GetTaskAllByUserId([FromQuery] Guid userId) => // work
+    public List<TasksUsersDTO?> GetTaskAllByUserId([FromQuery] Guid userId) => // work
          _taskService.GetAllTasksByUser(userId);
 
     [HttpGet("{userId}")]
