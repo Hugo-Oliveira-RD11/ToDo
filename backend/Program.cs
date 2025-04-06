@@ -1,6 +1,7 @@
 using backend.Data;
 using backend.Models;
-using backend.Services;
+using backend.Services.TaskServices;
+using backend.Services.UserServices;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -12,13 +13,15 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<UserContext>(
-    op => op.UseNpgsql(builder.Configuration["ConnectionsDB:UserConnection"])
-);
+    op => op.UseNpgsql(builder.Configuration["ConnectionsDB:UserConnection"]));
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddSingleton<IPasswordService, PasswordService>();
+
 builder.Services.Configure<TasksUsersDatabaseSettings>(
     builder.Configuration.GetSection("ConnectionsDB:TasksUsersDatabase"));
 
-builder.Services.AddSingleton<TaskService>();
-builder.Services.AddScoped<UserService>();
 
 
 
