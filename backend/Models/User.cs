@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using backend.Services;
+using backend.Services.UserServices;
 
 namespace backend.Models;
 
