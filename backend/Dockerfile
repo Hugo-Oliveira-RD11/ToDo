@@ -1,22 +1,15 @@
-# Etapa de build
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-WORKDIR /App
+WORKDIR /src
 
-# Copia os arquivos do projeto
+COPY Directory.Packages.props ./
+COPY backend/*.csproj ./backend/
+RUN dotnet restore ./backend/backend.csproj
+
 COPY . ./
+RUN dotnet publish ./backend/backend.csproj -c Release -o /app/out
 
-# Restaura as dependências
-RUN dotnet restore
-
-# Compila e publica em Release
-RUN dotnet publish -c Debug -o /App/out
-
-# Etapa de runtime
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
-WORKDIR /App
+WORKDIR /app
+COPY --from=build /app/out .
 
-# Copia os arquivos da etapa de build
-COPY --from=build /App/out .
-
-# Define o ponto de entrada
 ENTRYPOINT ["dotnet", "backend.dll"]
