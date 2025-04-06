@@ -1,7 +1,7 @@
 
 using backend.DTO;
 using backend.Models;
-using backend.Services;
+using backend.Services.TaskServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
@@ -9,13 +9,13 @@ namespace backend.Controllers;
 [Route("v1/task")]
 public class TaskController : ControllerBase
 {
-    private readonly TaskService _taskService;
-    public TaskController(TaskService taskService)
+    private readonly ITaskService _taskService;
+    public TaskController(ITaskService taskService)
     {
         _taskService = taskService;
     }
     [HttpGet]
-    public List<TasksUsersDTO> GetTaskAllByUserId([FromQuery] Guid userId) => // work
+    public List<TasksUsersDTO?> GetTaskAllByUserId([FromQuery] Guid userId) => // work
          _taskService.GetAllTasksByUser(userId);
 
     [HttpGet("{userId}")]
