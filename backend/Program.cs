@@ -1,9 +1,11 @@
+using System.Text;
 using backend.Data;
 using backend.Models;
 using backend.Services.TaskServices;
 using backend.Services.UserServices;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +24,22 @@ builder.Services.AddSingleton<IPasswordService, PasswordService>();
 builder.Services.Configure<TasksUsersDatabaseSettings>(
     builder.Configuration.GetSection("ConnectionsDB:TasksUsersDatabase"));
 
+builder.Services.AddAuthentication(options => {
 
+    }).AddJwtBearer(op => {
+        var key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:key"]!) ?? throw new NullReferenceException("JWT:key nao esta definido no appsettings");
+        op.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidAudience = builder.Configuration["JWT:Audience"],
+            ValidIssuer = builder.Configuration["JWT:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuerSigningKey = true,
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+        });
 
 
 var app = builder.Build();
@@ -52,6 +69,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

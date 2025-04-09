@@ -35,6 +35,7 @@ public class TokenService : ITokenService
     private IEnumerable<Claim> GetClaims(User user)
     {
         return new[]{
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Name, user.Name),
             new Claim(ClaimTypes.Email, user.Email)
         };

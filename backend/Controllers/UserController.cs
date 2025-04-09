@@ -11,9 +11,11 @@ namespace backend.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
-    public UserController(IUserService userService)
+    private readonly ITokenService _tokenService;
+    public UserController(IUserService userService, ITokenService tokenService)
     {
         _userService = userService;
+        _tokenService = tokenService;
     }
 
     [HttpPost]
@@ -41,9 +43,25 @@ public class UserController : ControllerBase
     public async Task<ActionResult<UserDTO>> UpdateUser([FromQuery] Guid userId, [FromBody] User updatedUser)
     {
         UserDTO? response = await _userService.UpdateUserById(userId, updatedUser);
+
         if (response == null)
             return StatusCode(404, "user dont exist");
+
         return Ok(response);
+    }
+
+    [HttpGet("/login")]
+    public ActionResult<string> Login(LoginDTO loginUser)
+    {
+        if(loginUser == null)
+            return StatusCode(400, "values equal null");
+
+        var user = _userService.GetUserByEmail(loginUser.Email!) ?? null;
+
+        if(user == null)
+            return StatusCode(404, "user dont exist");
+
+        return _tokenService.Generate(user);
     }
 
 #if DEBUG
