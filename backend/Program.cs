@@ -3,9 +3,9 @@ using backend.Data;
 using backend.Models;
 using backend.Services.TaskServices;
 using backend.Services.UserServices;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +41,11 @@ builder.Services.AddAuthentication(options => {
         };
         });
 
+builder.Services.AddStackExchangeRedisCache(op =>
+{
+    op.InstanceName = builder.Configuration["ConnectionsDB:RefreshTokenDB:InstanceName"] ?? "ToDo";
+    op.Configuration = builder.Configuration["ConnectionsDB:RefreshTokenDB:ConnectionString"] ?? throw new NullReferenceException($"ConnectionsDB:RefreshTokenDB:ConnectionString is null");
+});
 
 var app = builder.Build();
 
