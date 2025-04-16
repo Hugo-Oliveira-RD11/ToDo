@@ -1,12 +1,13 @@
-
 using backend.DTO;
 using backend.Models;
 using backend.Services.TaskServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
 
 [Route("v1/task")]
+[Authorize]
 public class TaskController : ControllerBase
 {
     private readonly ITaskService _taskService;
