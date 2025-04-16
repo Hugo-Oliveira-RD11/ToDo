@@ -1,6 +1,7 @@
 using System.Text;
 using backend.Data;
 using backend.Models;
+using backend.Services.AuthServices;
 using backend.Services.TaskServices;
 using backend.Services.UserServices;
 using Microsoft.EntityFrameworkCore;
@@ -19,19 +20,21 @@ builder.Services.AddDbContext<UserContext>(
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IRefreshToken, RefreshToken>();
 builder.Services.AddSingleton<IPasswordService, PasswordService>();
 
 builder.Services.Configure<TasksUsersDatabaseSettings>(
     builder.Configuration.GetSection("ConnectionsDB:TasksUsersDatabase"));
 
 builder.Services.AddAuthentication(options => {
-
     }).AddJwtBearer(op => {
         var key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:key"]!) ?? throw new NullReferenceException("JWT:key nao esta definido no appsettings");
+        var issuer = builder.Configuration["JWT:issuer"]! ?? throw new NullReferenceException("JWT:issuer nao esta definido no appsettings");
+        var audience = builder.Configuration["JWT:audience"]! ?? throw new NullReferenceException("JWT:audience nao esta definido no appsettings");
         op.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidAudience = builder.Configuration["JWT:Audience"],
-            ValidIssuer = builder.Configuration["JWT:Issuer"],
+            ValidAudience = audience,
+            ValidIssuer = issuer,
             IssuerSigningKey = new SymmetricSecurityKey(key),
             ValidateIssuerSigningKey = true,
             ValidateAudience = true,
@@ -61,6 +64,7 @@ using (var scope = app.Services.CreateScope())
             break;
         }
         catch(Exception e){
+            Console.WriteLine($"error: {e}");
             Thread.Sleep(delayMilliseconds);
         }
     }
