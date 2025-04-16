@@ -22,8 +22,8 @@ public class TokenService : ITokenService
         var expiration = DateTime.UtcNow.AddHours(int.Parse(_constProvider.GetConfig("ExpireHours")));
 
         var token = new JwtSecurityToken(
-            issuer: _constProvider.GetConfig("Issuer"),
-            audience: _constProvider.GetConfig("Audience"),
+            issuer: _constProvider.GetConfig("issuer"),
+            audience: _constProvider.GetConfig("audience"),
             claims: claimsUser,
             expires: expiration,
             signingCredentials: credentials
