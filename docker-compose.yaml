@@ -22,6 +22,7 @@ services:
     depends_on:
       - postgres
       - mongo
+      - redis_refresh_token
     networks:
       - redinha
 
@@ -34,6 +35,7 @@ services:
     depends_on:
       - postgres
       - mongo
+      - redis_refresh_token
     networks:
       - redinha
 
@@ -60,6 +62,16 @@ services:
       - mongo_data:/data/db
     networks:
       - redinha
+
+  redis_refresh_token:
+    container_name: redis_token
+    image: redis:7.4.2-alpine
+    environment:
+      - REDIS_PASSWORD: redisRefresh
+    networks:
+      - redinha
+    ports:
+    - "6379:6379"
 
 volumes:
   postgres_data:
