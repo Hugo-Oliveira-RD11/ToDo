@@ -6,8 +6,9 @@ public class PasswordService : IPasswordService
 
     public PasswordService(IConfiguration configuration)
     {
-        _cost = int.Parse(configuration["BCrypt:Cost"] ?? "12");
+        _cost = int.Parse(configuration["BCrypt:Cost"] ?? "10");
     }
+    public int Cost() => _cost;
 
     public string PasswordGenerate(string password) =>
         BCrypt.Net.BCrypt.HashPassword(password, workFactor: _cost);

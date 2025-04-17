@@ -4,4 +4,5 @@ public interface IPasswordService
 {
     string PasswordGenerate(string password);
     bool CheckPasswordCorrect(string password, string hashPassword);
+    int Cost();
 }
