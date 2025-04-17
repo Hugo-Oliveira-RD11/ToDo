@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
 
-[Route("v1/user/login")]
+[Route("v1/user/auth")]
 [ApiController]
 public class AuthController : ControllerBase
 {
@@ -20,7 +20,7 @@ public class AuthController : ControllerBase
         _tokenService = tokenService;
     }
 
-    [HttpGet("/login")]
+    [HttpPost("login")]
     public ActionResult Login([FromBody] LoginDTO loginUser)
     {
         if(loginUser == null)
