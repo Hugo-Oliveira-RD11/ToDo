@@ -18,9 +18,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<UserContext>(
     op => op.UseNpgsql(builder.Configuration["ConnectionsDB:UserConnection"]));
 
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IJwtConstProvider, JwtConstProvider>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
-builder.Services.AddScoped<IRefreshToken, RefreshToken>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddSingleton<IPasswordService, PasswordService>();
 
 builder.Services.Configure<TasksUsersDatabaseSettings>(
