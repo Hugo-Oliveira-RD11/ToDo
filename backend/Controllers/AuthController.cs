@@ -14,10 +14,12 @@ public class AuthController : ControllerBase
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
     private readonly IRefreshTokenService _refreshToken;
-    public AuthController(IUserService userService, ITokenService tokenService)
+
+    public AuthController(IUserService userService, ITokenService tokenService, IRefreshTokenService refreshToken)
     {
         _userService = userService;
         _tokenService = tokenService;
+        _refreshToken = refreshToken;
     }
 
     [HttpPost("login")]
