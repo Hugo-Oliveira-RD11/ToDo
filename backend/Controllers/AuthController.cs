@@ -19,7 +19,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("/login")]
-    public ActionResult<string> Login(LoginDTO loginUser)
+    public ActionResult Login([FromBody] LoginDTO loginUser)
     {
         if(loginUser == null)
             return StatusCode(400, "values equal null");
