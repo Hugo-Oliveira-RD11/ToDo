@@ -35,6 +35,40 @@ public class AuthController : ControllerBase
 
         var token = _tokenService.Generate(user);
         var accessToken = GuidService.GuidGenerate();
+
+        _refreshToken.SetAsync(accessToken.ToString(), user.Id.ToString());
+
+        MakeCookie(accessToken);
+
+        return Ok(new {jwt = token, longToken = accessToken});
+    }
+
+    [HttpPost("refresh")]
+    public async Task<ActionResult> RefreshToken()
+    {
+        var refreshToken = Request.Cookies["refreshToken"];
+        if(string.IsNullOrEmpty(refreshToken))
+            return Unauthorized("token nao encontrado no cookie");
+
+        var userId = await _refreshToken.GetAsync(refreshToken.ToString());
+        if(string.IsNullOrEmpty(userId))
+            return Unauthorized("token invalido ou expirado");
+
+        var user = _userService.GetUserById(Guid.Parse(userId));
+        if(user == null)
+            return NotFound("Usuario nao existe ou nao encontrado");
+
+        var newJwt = _tokenService.Generate(user);
+        var newRefreshToken = GuidService.GuidGenerate();
+
+        await _refreshToken.SetAsync(newRefreshToken.ToString(), user.Id.ToString());
+
+        MakeCookie(newRefreshToken);
+        return Ok(new { jwt = newJwt });
+    }
+
+    private void MakeCookie(Guid accessToken)
+    {
         Response.Cookies.Append(
         "refreshToken",
         accessToken.ToString(),
@@ -45,9 +79,5 @@ public class AuthController : ControllerBase
             SameSite = SameSiteMode.Strict,
             Expires = DateTimeOffset.UtcNow.AddDays(7)
         });
-
-        _refreshToken.SetAsync(user.Id.ToString(), accessToken.ToString());
-        
-        return Ok(new {jwt = token, longToken = accessToken});
     }
 }
