@@ -67,7 +67,7 @@ services:
     container_name: redis_token
     image: redis:7.4.2-alpine
     environment:
-      - REDIS_PASSWORD: redisRefresh
+      REDIS_PASSWORD: redisRefresh
     networks:
       - redinha
     ports:
