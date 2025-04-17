@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend", "backend\backend.csproj", "{0E401344-04B8-4F24-B18F-947B926F9D2B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend.tests", "backend.tests", "{C0C6E044-CB20-653A-D6C2-4CA8FE87111B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "backend.tests\tests\tests.csproj", "{06663740-CB0F-4BC6-923D-98AD8596243E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +31,23 @@ Global
 		{0E401344-04B8-4F24-B18F-947B926F9D2B}.Release|x64.Build.0 = Release|Any CPU
 		{0E401344-04B8-4F24-B18F-947B926F9D2B}.Release|x86.ActiveCfg = Release|Any CPU
 		{0E401344-04B8-4F24-B18F-947B926F9D2B}.Release|x86.Build.0 = Release|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|x64.Build.0 = Debug|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|x86.Build.0 = Debug|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|x64.ActiveCfg = Release|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|x64.Build.0 = Release|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|x86.ActiveCfg = Release|Any CPU
+		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06663740-CB0F-4BC6-923D-98AD8596243E} = {C0C6E044-CB20-653A-D6C2-4CA8FE87111B}
 	EndGlobalSection
 EndGlobal
