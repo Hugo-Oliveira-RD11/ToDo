@@ -13,11 +13,9 @@ namespace backend.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
-    private readonly ITokenService _tokenService;
-    public UserController(IUserService userService, ITokenService tokenService)
+    public UserController(IUserService userService)
     {
         _userService = userService;
-        _tokenService = tokenService;
     }
 
     [HttpPost]
