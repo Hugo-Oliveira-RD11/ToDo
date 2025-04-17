@@ -5,6 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+
+#if DEBUG
+using System.Diagnostics;
+using backend.Data;
+#endif
+
 namespace backend.Controllers;
 
 [Route("v1/user")]
@@ -13,9 +19,23 @@ namespace backend.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
-    public UserController(IUserService userService)
+#if DEBUG
+    private readonly UserContext _context;
+    private readonly IPasswordService _passwordService;
+#endif
+
+    public UserController(IUserService userService
+#if DEBUG
+                          , UserContext context
+                          , IPasswordService passwordService
+#endif
+    )
     {
         _userService = userService;
+        #if DEBUG
+        _context = context;
+        _passwordService = passwordService;
+        #endif
     }
 
     [HttpPost]
@@ -69,5 +89,38 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
+    [HttpGet("test-insert")]
+    [AllowAnonymous]
+    public async Task<IActionResult> TestInsert()
+    {
+        var sw = new Stopwatch();
+        sw.Start();
+
+        _context.Users.Add(new User
+        {
+            Name = "Test",
+            Email = Guid.NewGuid().ToString("N") + "@mail.com",
+            Password = "123456"
+        });
+
+        await _context.SaveChangesAsync();
+
+        sw.Stop();
+        return Ok($"Tempo de inserção: {sw.ElapsedMilliseconds}ms");
+    }
+
+    [HttpGet("test-password")]
+    [AllowAnonymous]
+    public async Task<IActionResult>  TestTimerPassword()
+    {
+        var sw = Stopwatch.StartNew();
+
+
+        var cost = _passwordService.Cost();
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword("12345", cost);
+
+        sw.Stop();
+        return Ok($"Tempo para gerar senha: {sw.ElapsedMilliseconds}ms\n usando {cost} de custo");
+    }
 #endif
 }
