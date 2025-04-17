@@ -1,5 +1,6 @@
 using backend.DTO;
 using backend.Models;
+using backend.Services.AuthServices;
 using backend.Services.UserServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
+    private readonly IRefreshTokenService _refreshToken;
     public AuthController(IUserService userService, ITokenService tokenService)
     {
         _userService = userService;
@@ -29,6 +31,21 @@ public class AuthController : ControllerBase
         if(user == null)
             return StatusCode(404, "user dont exist");
 
-        return _tokenService.Generate(user);
+        var token = _tokenService.Generate(user);
+        var accessToken = GuidService.GuidGenerate();
+        Response.Cookies.Append(
+        "refreshToken",
+        accessToken.ToString(),
+        new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTimeOffset.UtcNow.AddDays(7)
+        });
+
+        _refreshToken.SetAsync(user.Id.ToString(), accessToken.ToString());
+        
+        return Ok(new {jwt = token, longToken = accessToken});
     }
 }
