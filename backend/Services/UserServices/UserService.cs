@@ -34,6 +34,9 @@ public class UserService : IUserService
     public User? GetUserById(Guid userId) =>
         _context.Users.FirstOrDefault(user => user.Id == userId);
 
+    public User? GetUserByEmail(string userEmail) =>
+        _context.Users.FirstOrDefault(user => user.Email == userEmail);
+
     public async Task<UserDTO?> UpdateUserById(Guid userId, User updatedUser)
     {
         var existingUser = GetUserById(userId);

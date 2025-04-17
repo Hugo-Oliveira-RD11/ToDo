@@ -7,6 +7,7 @@ public interface IUserService
 {
     Task<UserDTO> CreateUser(User user);
     User? GetUserById(Guid userSearch);
+    User? GetUserByEmail(string userSearch);
     Task<UserDTO?> UpdateUserById(Guid userId, User newUser);
     bool DeleteUserById(Guid userId);
 
