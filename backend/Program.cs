@@ -1,12 +1,10 @@
 using System.Text;
 using backend.Data;
 using backend.Models;
-using backend.Services.AuthServices;
-using backend.Services.TaskServices;
-using backend.Services.UserServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using StackExchange.Redis;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using backend.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,12 +16,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<UserContext>(
     op => op.UseNpgsql(builder.Configuration["ConnectionsDB:UserConnection"]));
 
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IJwtConstProvider, JwtConstProvider>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ITaskService, TaskService>();
-builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-builder.Services.AddSingleton<IPasswordService, PasswordService>();
+builder.Services.AddUserServices();
+builder.Services.AddTaskServices();
 
 builder.Services.Configure<TasksUsersDatabaseSettings>(
     builder.Configuration.GetSection("ConnectionsDB:TasksUsersDatabase"));
