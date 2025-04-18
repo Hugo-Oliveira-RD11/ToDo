@@ -11,6 +11,6 @@ public static class MappingConfig
 
     public static void RegisterMappingsToTask()
     {
-        TypeAdapterConfig<User, UserModel>.NewConfig();
+        TypeAdapterConfig<Task, TaskModel>.NewConfig();
     }
 }
