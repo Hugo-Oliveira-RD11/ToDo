@@ -11,7 +11,6 @@ public class TasksUsers
     public Category Category { get; private set; } = Category.White;
     public bool Done { get; private set; } = false;
     public DateTime? ADayToComplet { get; private set; } = null;
-    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
     public TasksUsers() { } // Para o EF
 
@@ -24,7 +23,6 @@ public class TasksUsers
         Notes = notes;
         Category = category;
         ADayToComplete = aDayToComplete;
-        CreatedAt = DateTime.UtcNow;
     }
     public void UpdateGoal(string newGoal)
     {
