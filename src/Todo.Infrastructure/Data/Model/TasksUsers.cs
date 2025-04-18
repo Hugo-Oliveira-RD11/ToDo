@@ -1,14 +1,9 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace backend.Models;
-public enum Category {
-    White = 0,
-    Blue = 1,
-    Yellow = 2,
-    Red = 3
-}
-public class TasksUsers
+namespace Todo.Infrastructure.Data.Model;
+
+public class TasksModel
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
