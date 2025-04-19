@@ -6,10 +6,10 @@ using System.Collections.Generic;
 namespace Todo.Domain.Interfaces.Repositories;
 public interface ITaskRepository
 {
-    Task<User> GetByIdAsync(Guid id);
-    Task<IEnumerable<User>> GetAllAsync();
-    Task AddAsync(User user);
-    Task UpdateAsync(User user);
-    Task DeleteAsync(Guid id);
-    Task<User> GetByEmailAsync(string email);
+    Task<Task> GetByIdAsync(string id);
+    Task<IEnumerable<Task>> GetAllAsync();
+    Task AddAsync(Task task);
+    Task UpdateAsync(Task task);
+    Task DeleteAsync(string id);
+    Task<Task> GetByUserIdAsync(Guid userId);
 }
