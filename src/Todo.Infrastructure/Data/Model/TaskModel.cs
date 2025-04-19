@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Todo.Infrastructure.Data.Model;
 
-public class TasksModel
+public class TaskModel
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
