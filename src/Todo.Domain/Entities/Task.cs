@@ -2,7 +2,7 @@ using Todo.Domain.Enums;
 
 namespace Todo.Domain.Entities;
 
-public class TasksUsers
+public class Task
 {
     public string Id { get; private set; } = string.Empty;
     public Guid UserId { get; private set; }
@@ -12,9 +12,9 @@ public class TasksUsers
     public bool Done { get; private set; } = false;
     public DateTime? ADayToComplet { get; private set; } = null;
 
-    public TasksUsers() { } // Para o EF
+    public Task() { } // Para o EF
 
-    public TasksUsers(Guid userId, string goal, string notes, Category category, DateTime? aDayToComplete)
+    public Task(Guid userId, string goal, string notes, Category category, DateTime? aDayToComplete)
     {
         Id = Guid.NewGuid().ToString();
         UserId = userId;
