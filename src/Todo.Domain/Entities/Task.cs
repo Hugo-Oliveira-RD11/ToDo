@@ -1,6 +1,7 @@
-using Todo.Domain.Enums;
 
 namespace Todo.Domain.Entities;
+
+using Todo.Domain.ValueObjects;  // Para usar DueDate
 
 public class Task
 {
@@ -10,11 +11,11 @@ public class Task
     public string Notes { get; private set; } = string.Empty;
     public Category Category { get; private set; } = Category.White;
     public bool Done { get; private set; } = false;
-    public DateTime? ADayToComplet { get; private set; } = null;
+    public DueDate? ADayToComplete { get; private set; } = null;
 
     public Task() { } // Para o EF
 
-    public Task(Guid userId, string goal, string notes, Category category, DateTime? aDayToComplete)
+    public Task(Guid userId, string goal, string notes, Category category, DueDate? aDayToComplete)
     {
         Id = Guid.NewGuid().ToString();
         UserId = userId;
@@ -24,6 +25,7 @@ public class Task
         Category = category;
         ADayToComplete = aDayToComplete;
     }
+
     public void UpdateGoal(string newGoal)
     {
         ValidateGoal(newGoal);
@@ -39,16 +41,15 @@ public class Task
     public void UpdateCategory(Category newCategory) =>
         Category = newCategory;
 
-    public void UpdateDayToComplete(DateTime? newDate)
+    public void UpdateDayToComplete(DueDate? newDate)
     {
-        ValidateDayToComplete(newDate);
-        ADayToComplete = newDate;
+        ADayToComplete = newDate;  // Atualiza com o novo DueDate
     }
 
     public void MarkAsDone() =>
         Done = true;
 
-    public void MarkAsNotDone() => 
+    public void MarkAsNotDone() =>
         Done = false;
 
     private void ValidateGoal(string goal)
@@ -61,11 +62,5 @@ public class Task
     {
         if (!string.IsNullOrWhiteSpace(notes) && notes.Trim().Length < 1)
             throw new ArgumentException("Se preenchida, a anotação deve ter pelo menos 3 caracteres.");
-    }
-
-    private void ValidateDayToComplete(DateTime? date)
-    {
-        if (date.HasValue && date.Value.Date < DateTime.UtcNow.Date)
-            throw new ArgumentException("A data de conclusão não pode ser no passado.");
     }
 }
