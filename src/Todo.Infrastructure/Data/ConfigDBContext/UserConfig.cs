@@ -14,8 +14,11 @@ public class UserConfig : IEntityTypeConfiguration<User>
             .HasMaxLength(100); 
 
         builder.Property(u => u.Email)
+            .HasConversion(
+                v => v.Value,  
+                v => new Email(v))
             .IsRequired()
-            .HasMaxLength(255); 
+            .HasMaxLength(255);
 
         builder.HasCheckConstraint(
             "CK_User_Email",

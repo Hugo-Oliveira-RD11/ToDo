@@ -1,7 +1,6 @@
 using Mapster;
 using Todo.Domain.Entities;
 
-[AdaptFrom(typeof(User))]
 public class UserModel
 {
     public Guid Id { get; set; }

@@ -47,7 +47,10 @@ public class TaskRepository : ITaskRepository
     {
         var taskModel = TaskMapping.ToTaskModel(task);
         var filter = Builders<TaskModel>.Filter.Eq(t => t.Id, task.Id);
-        await _taskCollection.ReplaceOneAsync(filter, taskModel);
+        var result = await _taskCollection.ReplaceOneAsync(filter, taskModel);
+
+        if (result.MatchedCount == 0)
+            throw new Exception("Tarefa não encontrada para atualização.");
     }
 
     public async Task DeleteAsync(string id)
@@ -56,12 +59,4 @@ public class TaskRepository : ITaskRepository
         await _taskCollection.DeleteOneAsync(filter);
     }
 
-    public async Task<Task> GetByUserIdAsync(Guid userId)
-    {
-        var taskModel = await _taskCollection
-            .Find(t => t.UserId == userId)
-            .FirstOrDefaultAsync();
-
-        return taskModel != null ? TaskMapping.ToTask(taskModel) : null;
-    }
 }
