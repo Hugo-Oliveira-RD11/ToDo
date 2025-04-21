@@ -1,35 +1,50 @@
+using Todo.Domain.Enums;
+using Todo.Domain.ValueObjects;
 
 namespace Todo.Domain.Entities;
+// Para usar DueDate
 
-using Todo.Domain.ValueObjects;  // Para usar DueDate
-
-public class Task
+public class TodoTask
 {
-    public string Id { get; private set; } = string.Empty;
+    public string Id { get; private set; } 
     public Guid UserId { get; private set; }
     public string Goal { get; private set; } = string.Empty;
     public string Notes { get; private set; } = string.Empty;
-    public Category Category { get; private set; } = Category.White;
+    public Categories Category { get; private set; } 
     public bool Done { get; private set; } = false;
-    public DueDate? ADayToComplete { get; private set; } = null;
+    public DueDate CompletationDate { get; private set; }
 
-    public Task() { } // Para o EF
+    public TodoTask() { } // Para o EF
 
-    public Task(Guid userId, string goal, string notes, Category category, DueDate? aDayToComplete)
+    public TodoTask(Guid userId, string goal, string notes, Categories category, DueDate completationDate)
     {
+        ValidateGoal(goal);
+        ValidateNotes(notes);
+        
         Id = Guid.NewGuid().ToString();
         UserId = userId;
-        ValidateGoal(goal);
         Goal = goal;
         Notes = notes;
         Category = category;
-        ADayToComplete = aDayToComplete;
+        CompletationDate = completationDate;
     }
 
     public void UpdateGoal(string newGoal)
     {
         ValidateGoal(newGoal);
         Goal = newGoal;
+    }
+    public static TodoTask LoadFromDb(string id, Guid userId, string goal, string notes, Categories category, DateTime completationDate, bool done)
+    {
+        var task = new TodoTask(userId, goal, notes, category, completationDate)
+        {
+            Id = id
+        };
+
+        if (done)
+            task.MarkAsDone();
+        
+        return task;
     }
 
     public void UpdateNotes(string newNotes)
@@ -38,16 +53,19 @@ public class Task
         Notes = newNotes;
     }
 
-    public void UpdateCategory(Category newCategory) =>
+    public void UpdateCategory(Categories newCategory) =>
         Category = newCategory;
 
-    public void UpdateDayToComplete(DueDate? newDate)
+    public void UpdateDueDate(DueDate newDate)
     {
-        ADayToComplete = newDate;  // Atualiza com o novo DueDate
+        CompletationDate = newDate;  
     }
 
-    public void MarkAsDone() =>
+    public void MarkAsDone()
+    {
         Done = true;
+        CompletationDate = DateTime.Now;
+    }
 
     public void MarkAsNotDone() =>
         Done = false;
