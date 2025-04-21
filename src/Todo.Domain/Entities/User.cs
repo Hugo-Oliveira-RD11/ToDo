@@ -1,9 +1,13 @@
+using System.Text.RegularExpressions;
+
+using Todo.Domain.Enums;
+using Todo.Domain.Validators;
 
 namespace Todo.Domain.Entities;
 
 public class User
 {
-    public Guid Id { get; init; }
+    public Guid Id { get; private set; }
     public string Name { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
     public string Password { get; private set; } = string.Empty;
@@ -21,6 +25,15 @@ public class User
         this.Email = email;
         this.Password = password;
     }
+    public static User LoadFromDb(Guid id, string name, string email, string password)
+    {
+        var user = new User(name, email, password)
+        {
+            Id = id
+        };
+        return user;
+    }
+    
     private void ValidateEmail(string email)
     {
         if (string.IsNullOrWhiteSpace(email))
