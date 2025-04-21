@@ -3,23 +3,19 @@ using Todo.Domain.Entities;
 using Todo.Domain.Interfaces.Repositories;
 using Todo.Infrastructure.Data.Model;
 using Todo.Infrastructure.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Todo.Infrastructure.Data.Repositories;
+namespace Todo.Infrastructure.Repositories;
 
 public class TaskRepository : ITaskRepository
 {
-    private readonly IMongoCollection<TaskModel> _taskCollection;
+    private readonly IMongoCollection<TodoTaskModel> _taskCollection;
 
     public TaskRepository(IMongoDatabase database)
     {
-        _taskCollection = database.GetCollection<TaskModel>("Tasks");
+        _taskCollection = database.GetCollection<TodoTaskModel>("Tasks");
     }
 
-    public async Task<Task> GetByIdAsync(string id)
+    public async Task<TodoTask> GetTaskByIdAsync(string id)
     {
         var taskModel = await _taskCollection
             .Find(t => t.Id == id)
@@ -28,7 +24,7 @@ public class TaskRepository : ITaskRepository
         return taskModel != null ? TaskMapping.ToTask(taskModel) : null;
     }
 
-    public async Task<IEnumerable<Task>> GetAllAsync()
+    public async Task<IEnumerable<TodoTask>> GetAllAsync()
     {
         var taskModels = await _taskCollection
             .Find(t => true)
@@ -37,16 +33,16 @@ public class TaskRepository : ITaskRepository
         return taskModels.Select(TaskMapping.ToTask);
     }
 
-    public async Task AddAsync(Task task)
+    public async Task AddAsync(TodoTask todoTask)
     {
-        var taskModel = TaskMapping.ToTaskModel(task);
+        var taskModel = TaskMapping.ToTaskModel(todoTask);
         await _taskCollection.InsertOneAsync(taskModel);
     }
 
-    public async Task UpdateAsync(Task task)
+    public async Task UpdateAsync(TodoTask todoTask)
     {
-        var taskModel = TaskMapping.ToTaskModel(task);
-        var filter = Builders<TaskModel>.Filter.Eq(t => t.Id, task.Id);
+        var taskModel = TaskMapping.ToTaskModel(todoTask);
+        var filter = Builders<TodoTaskModel>.Filter.Eq(t => t.Id, todoTask.Id);
         var result = await _taskCollection.ReplaceOneAsync(filter, taskModel);
 
         if (result.MatchedCount == 0)
@@ -55,7 +51,7 @@ public class TaskRepository : ITaskRepository
 
     public async Task DeleteAsync(string id)
     {
-        var filter = Builders<TaskModel>.Filter.Eq(t => t.Id, id);
+        var filter = Builders<TodoTaskModel>.Filter.Eq(t => t.Id, id);
         await _taskCollection.DeleteOneAsync(filter);
     }
 
