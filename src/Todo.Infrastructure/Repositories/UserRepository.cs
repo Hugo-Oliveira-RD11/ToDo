@@ -18,7 +18,8 @@ public class UserRepository : IUserRepository
 
     public async Task<User> GetByIdAsync(Guid id)
     {
-        return await _context.Users.FindAsync(id);
+        var userModel = await _context.Users.FindAsync(id);
+        return userModel == null ? null : UserMapping.ToUser(userModel);
     }
 
     public async Task<IEnumerable<User>> GetAllAsync()
