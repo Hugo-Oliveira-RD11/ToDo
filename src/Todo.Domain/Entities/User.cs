@@ -43,18 +43,12 @@ public class User
 
     public void UpdateName(string newName)
     {
-        if (string.IsNullOrEmpty(newName))
-            throw new ArgumentException("O nome não pode ser vazio.");
-
         ValidateName(newName);  
         Name = newName;
     }
 
     public void UpdateEmail(string newEmail)
     {
-        if (newEmail == null)
-            throw new ArgumentException("O e-mail não pode ser vazio.");
-
         ValidateEmail(newEmail);
         Email = newEmail;  
     }
