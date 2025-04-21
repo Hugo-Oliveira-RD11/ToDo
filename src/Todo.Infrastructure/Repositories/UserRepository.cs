@@ -43,7 +43,13 @@ public class UserRepository : IUserRepository
 
     public async Task UpdateAsync(User user)
     {
-        _context.Users.Update(user);
+       var userTest = await _context.Users.FindAsync(user.Id);
+        
+        if (userTest == null)
+            throw new NullReferenceException("este usuario nao existe");
+        
+        var userModel = UserMapping.ToUserModel(user);
+        _context.Users.Update(userModel);
         await _context.SaveChangesAsync();
     }
 
