@@ -51,10 +51,12 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<User> GetByEmailAsync(string email)
+    public async Task<User?> GetByEmailAsync(string email)
     {
-        return await _context.Users
+        var userModel = await _context.Users
             .Where(u => u.Email == email)
             .FirstOrDefaultAsync();
+        
+        return userModel == null ? null : UserMapping.ToUser(userModel);
     }
 }
