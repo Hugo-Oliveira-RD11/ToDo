@@ -1,11 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using Todo.Infrastructure.Settings; 
 using Todo.Domain.Interfaces.Repositories;
-using Todo.Infrastructure.Data;
-using Todo.Infrastructure.Data.Repositories;
-using Todo.Infrastructure.Settings;
+using Todo.Infrastructure.Repositories;
+
 
 namespace Todo.IoC;
 
@@ -15,7 +14,7 @@ public static class MongoDbInjection
     {
         var section = configuration.GetSection("ConnectionsDB:TaskDatabase");
 
-        var mongoDbSettings = section.Get<MongoDbSettings>()
+        var mongoDbSettings = section.Get<TasksModelDatabaseSettings>()
             ?? throw new InvalidOperationException("As configurações do MongoDB não foram encontradas no appsettings.json.");
 
         var connectionString = mongoDbSettings.ConnectionString
@@ -24,7 +23,7 @@ public static class MongoDbInjection
         var databaseName = mongoDbSettings.DatabaseName
             ?? throw new InvalidOperationException("O DatabaseName do MongoDB está faltando no appsettings.json.");
 
-        services.Configure<MongoDbSettings>(section);
+        services.Configure<TasksModelDatabaseSettings>(section);
 
         services.AddSingleton<IMongoClient>(sp =>
         {
