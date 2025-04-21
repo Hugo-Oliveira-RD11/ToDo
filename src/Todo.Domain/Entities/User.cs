@@ -21,6 +21,14 @@ public class User
         this.Email = email;
         this.Password = password;
     }
+    private void ValidateEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            throw new ArgumentException("Email não pode ser vazio.");
+
+        if (!Regex.IsMatch(email, RegexPatterns.Email))
+            throw new ArgumentException("Email inválido.");
+    }
 
     private void ValidatePassword(string password)
     {
