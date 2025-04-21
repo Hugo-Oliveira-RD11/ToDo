@@ -1,13 +1,14 @@
 using Todo.Domain.Entities;
+using Todo.Domain.ValueObjects;
 using Todo.Infrastructure.Data.Model;
 
 namespace Todo.Infrastructure.Mapping;
 
 public static class TaskMapping
 {
-    public static TaskModel ToTaskModel(Task task)
+    public static TodoTaskModel ToTaskModel(TodoTask task)
     {
-        return new TaskModel
+        return new TodoTaskModel
         {
             Id = task.Id,
             UserId = task.UserId,
@@ -15,22 +16,19 @@ public static class TaskMapping
             Notes = task.Notes,
             Category = task.Category,
             Done = task.Done,
-            ADayToComplet = task.ADayToComplet,
+            CompletationDate = task.CompletationDate?.Value,
             CreatedAt = DateTime.UtcNow
         };
     }
 
-    public static Task ToTask(TaskModel taskModel)
+    public static TodoTask ToTask(TodoTaskModel taskModel)
     {
-        var task = new Task(
+        return new TodoTask(
             taskModel.UserId,
             taskModel.Goal,
             taskModel.Notes,
             taskModel.Category,
-            taskModel.ADayToComplet);
-
-        task.UpdateDayToComplete(taskModel.ADayToComplet);
-        return task;
+            taskModel.CompletationDate.HasValue ? new DueDate(taskModel.CompletationDate.Value) : null
+        );
     }
-
 }
