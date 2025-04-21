@@ -1,4 +1,3 @@
-using Todo.Domain.ValueObjects;
 
 namespace Todo.Domain.Entities;
 
@@ -6,12 +5,12 @@ public class User
 {
     public Guid Id { get; init; }
     public string Name { get; private set; } = string.Empty;
-    public Email Email { get; private set; } = Email.Empty;
+    public string Email { get; private set; } = string.Empty;
     public string Password { get; private set; } = string.Empty;
 
     public User() {}
 
-    public User(string name, Email email, string password)
+    public User(string name, string email, string password)
     {
         this.Id = Guid.NewGuid();
         ValidateName(name);
