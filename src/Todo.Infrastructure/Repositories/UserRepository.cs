@@ -22,10 +22,13 @@ public class UserRepository : IUserRepository
         return userModel == null ? null : UserMapping.ToUser(userModel);
     }
 
+    #if DEBUG
     public async Task<IEnumerable<User>> GetAllAsync()
     {
-        return await _context.Users.ToListAsync();
+        var userModel = await _context.Users.ToListAsync();
+        return userModel.Select(UserMapping.ToUser);
     }
+    #endif
 
     public async Task AddAsync(User user)
     {
