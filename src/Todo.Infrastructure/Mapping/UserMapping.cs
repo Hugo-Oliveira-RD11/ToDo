@@ -18,10 +18,10 @@ public static class UserMapping
 
     public static User ToUser(UserModel userModel)
     {
-        return new User(
+        return User.LoadFromDb(
             id: userModel.Id,
             name: userModel.Name,
-            email: new Email(userModel.Email),
+            email: userModel.Email,
             password: userModel.Password
         );
     }
