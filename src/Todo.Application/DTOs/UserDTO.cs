@@ -1,8 +1,8 @@
-namespace Todo.Application.Dtos;
+namespace Todo.Application.DTOs;
 
 public class UserDTO
 {
-    public Guid Id { get; init; }
-    public string Name { get; private set; } = string.Empty;
-    public Email Email { get; private set; } = Email.Empty;
+    public Guid Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
 }
