@@ -1,9 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Todo.Domain.Interfaces.Repositories;
-using Todo.Infrastructure.Data.Repositories;
-using Todo.Infrastructure.Mapping;
-using Todo.Infrastructure.Data;
-using MongoDB.Driver;
+using Todo.Infrastructure.Repositories;
 
 namespace Todo.IoC
 {
