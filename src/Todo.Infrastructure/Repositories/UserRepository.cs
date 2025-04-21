@@ -6,6 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
+using Todo.Domain.Interfaces.Repositories;
+using Todo.Infrastructure.Data;
+using Todo.Infrastructure.Mapping;
+
 namespace Todo.Infrastructure.Repositories;
 public class UserRepository : IUserRepository
 {
