@@ -50,11 +50,12 @@ public class User
         Name = newName;
     }
 
-    public void UpdateEmail(Email newEmail)
+    public void UpdateEmail(string newEmail)
     {
         if (newEmail == null)
             throw new ArgumentException("O e-mail não pode ser vazio.");
 
+        ValidateEmail(newEmail);
         Email = newEmail;  
     }
 
