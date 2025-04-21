@@ -12,12 +12,13 @@ public class User
 
     public User(string name, string email, string password)
     {
-        this.Id = Guid.NewGuid();
+        Id = Guid.NewGuid();
         ValidateName(name);
-        this.Name = name;
         ValidateEmail(email);
-        this.Email = email;
         ValidatePassword(password);
+        
+        this.Name = name;
+        this.Email = email;
         this.Password = password;
     }
 
