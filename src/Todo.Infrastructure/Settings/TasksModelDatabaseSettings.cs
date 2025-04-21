@@ -1,4 +1,4 @@
-namespace backend.Models;
+namespace Todo.Infrastructure.Settings;
 
 public class TasksModelDatabaseSettings
 {
