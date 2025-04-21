@@ -29,7 +29,8 @@ public class UserRepository : IUserRepository
 
     public async Task AddAsync(User user)
     {
-        await _context.Users.AddAsync(user);
+        var userModel = UserMapping.ToUserModel(user);
+        await _context.Users.AddAsync(userModel);
         await _context.SaveChangesAsync();
     }
 
