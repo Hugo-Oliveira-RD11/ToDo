@@ -43,23 +43,24 @@ public class UserRepository : IUserRepository
 
     public async Task UpdateAsync(User user)
     {
-       var userTest = await _context.Users.FindAsync(user.Id);
-        
-        if (userTest == null)
-            throw new NullReferenceException("este usuario nao existe");
-        
         var userModel = UserMapping.ToUserModel(user);
-        _context.Users.Update(userModel);
+        _context.Attach(userModel);
+
+        if(userModel.Name is not null)
+            _context.Entry(userModel).Property(u => u.Name).IsModified = true;
+
+        if(userModel.Email is not null)
+            _context.Entry(userModel).Property(u => u.Email).IsModified = true;
+
+        if(userModel.Password is not null)
+            _context.Entry(userModel).Property(u => u.Password).IsModified = true;
+
         await _context.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(Guid id)
     {
         var user = await _context.Users.FindAsync(id);
-        
-        if (user == null)
-            throw new NullReferenceException("este usuario nao existe");
-        
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
     }
