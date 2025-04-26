@@ -3,12 +3,14 @@ namespace Todo.Application.Commands.User;
 
 public class UpdateUserCommand
 {
+    public Guid Id { get; init; }
     public string? Name { get; init; }
     public string? Email { get; init; }
     public string? Password { get; init; }
 
-    public UpdateUserCommand(string? name = null, string? email = null, string? password = null )
+    public UpdateUserCommand(Guid id, string? name = null, string? email = null, string? password = null )
     {
+        Id = id;
         Name = name;
         Email = email;
         Password = password;
