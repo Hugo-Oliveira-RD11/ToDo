@@ -12,7 +12,7 @@ public class DeleteUserByEmailCommandHandler
         _repository = repository;
     }
 
-    public async void HandleAsync(DeleteUserCommand command)
+    public async Task HandleAsync(DeleteUserCommand command)
     {
         if(string.IsNullOrWhiteSpace(command.Email) && command.Id == null)
             throw new ArgumentNullException("argumentos nulos");
