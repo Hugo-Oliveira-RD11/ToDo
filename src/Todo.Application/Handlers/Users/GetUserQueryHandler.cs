@@ -3,11 +3,11 @@ using Todo.Domain.Entities;
 using Todo.Application.Queries;
 
 namespace Todo.Application.Handlers.Users;
-public class GetUserHandler
+public class GetUserQueryHandler
 {
     private readonly IUserRepository _userRepository;
 
-    public GetUserHandler(IUserRepository userRepository)
+    public GetUserQueryHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
