@@ -3,10 +3,12 @@ namespace Todo.Application.Commands.Task;
 
 public class DeleteTaskCommand
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
+    public Guid UserId { get; init; }
 
-    public DeleteTaskCommand(int id)
+    public DeleteTaskCommand(Guid id, Guid userId)
     {
         Id = id;
+        UserId = userId;
     }
 }
