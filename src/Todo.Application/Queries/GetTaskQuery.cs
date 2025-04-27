@@ -1,15 +1,13 @@
 namespace Todo.Application.Queries;
 
-public class GetTasksQuery
+public class GetTaskQuery
 {
-    public int Page { get; }
-    public int PageSize { get; }
+    public Guid? Id { get; init; }
+    public string? Title { get; init; }
 
-    public GetTasksQuery(int page = 1, int pageSize = 10)
+    public GetTaskQuery(Guid? id = null, string? title = null)
     {
-        Page = page < 1 ? 1 : page;
-        PageSize = pageSize;
+        Id = id;
+        Title = title;
     }
-
-    public bool IsPaged => PageSize > 0;
 }
