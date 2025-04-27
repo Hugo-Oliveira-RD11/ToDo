@@ -24,6 +24,15 @@ public class TaskRepository : ITaskRepository
         return taskModel != null ? TaskMapping.ToTask(taskModel) : null;
     }
 
+    public async Task<TodoTask?> GetTaskByGoalAsync(string goal)
+    {
+        var taskModel = await _taskCollection
+            .Find(t => t.Goal == goal)
+            .FirstOrDefaultAsync();
+
+        return taskModel != null ? TaskMapping.ToTask(taskModel) : null;
+    }
+
     public async Task<IEnumerable<TodoTask>> GetAllAsync()
     {
         var taskModels = await _taskCollection
