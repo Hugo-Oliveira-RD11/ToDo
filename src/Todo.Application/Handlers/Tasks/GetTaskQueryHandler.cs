@@ -15,10 +15,10 @@ public class GetTaskQueryHandler
     public async Task<TodoTask?> HandleAsync(GetTaskQuery query)
     {
         if(query.Id.HasValue)
-            return await _taskRepository.GetTaskByIdAsync(query.Id.Value.ToString()!);
+            return await _taskRepository.GetTaskByIdAndUserIdAsync(query.Id.Value.ToString(), query.UserId);
         
-        if(string.IsNullOrWhiteSpace(query.Title))
-            return await _taskRepository.GetTaskByGoalAsync(query.Title!);
+        if(!string.IsNullOrWhiteSpace(query.Title))
+            return await _taskRepository.GetTaskByGoalAndUserIdAsync(query.Title!, query.UserId);
         
         return null;
     }
