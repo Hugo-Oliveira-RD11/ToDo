@@ -1,6 +1,6 @@
-namespace backend.Models;
+namespace Todo.Infrastructure.Settings;
 
-public class TasksUsersDatabaseSettings
+public class TasksModelDatabaseSettings
 {
     public string ConnectionString { get; init ; } = string.Empty;
     

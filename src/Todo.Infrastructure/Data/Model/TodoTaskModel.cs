@@ -1,14 +1,11 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace backend.Models;
-public enum Category {
-    White = 0,
-    Blue = 1,
-    Yellow = 2,
-    Red = 3
-}
-public class TasksUsers
+using Todo.Domain.Enums;
+
+namespace Todo.Infrastructure.Data.Model;
+
+public class TodoTaskModel
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -17,22 +14,22 @@ public class TasksUsers
     [BsonRepresentation(BsonType.String)]
     public Guid UserId { get; set; }
     
-    [BsonElement("objetivo")]
-    public string Objetivo { get; set; } = string.Empty;
+    [BsonElement("goal")]
+    public string Goal { get; set; } = string.Empty;
 
-    [BsonElement("notas")]
-    public string Notas { get; set; } = string.Empty;
+    [BsonElement("notes")]
+    public string Notes { get; set; } = string.Empty;
 
     [BsonRepresentation(BsonType.Int32)]
     [BsonElement("category")]
-    public Category Category { get; set; } = Category.White;
+    public Categories Category { get; set; } = Categories.White;
     
-    [BsonElement("feito")]
-    public bool Feito { get; set; } = false;
+    [BsonElement("done")]
+    public bool Done { get; set; } = false;
 
-    [BsonElement("aDayToComplet")]
+    [BsonElement("completationDate")]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
-    public DateTime? ADayToComplet { get; set; } = null;
+    public DateTime? CompletationDate { get; set; } = null;
 
     [BsonElement("createdAt")]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
