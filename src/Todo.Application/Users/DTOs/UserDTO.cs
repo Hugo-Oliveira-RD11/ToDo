@@ -1,4 +1,4 @@
-namespace Todo.Application.DTOs;
+namespace Todo.Application.Users.DTOs;
 
 public class UserDTO
 {
