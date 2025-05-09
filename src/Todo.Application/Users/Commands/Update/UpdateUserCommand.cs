@@ -1,5 +1,5 @@
 
-namespace Todo.Application.Commands.User;
+namespace Todo.Application.Users.Commands.Delete;
 
 public class UpdateUserCommand
 {
