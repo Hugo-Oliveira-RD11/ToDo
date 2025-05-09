@@ -1,4 +1,4 @@
-namespace Todo.Application.Queries;
+namespace Todo.Application.Users.Queries.GetUser;
 
 public class GetUserQuery
 {
