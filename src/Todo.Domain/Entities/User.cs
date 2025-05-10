@@ -25,7 +25,7 @@ public class User
         this.Email = email;
         this.Password = password;
     }
-    public static User LoadFromDb(Guid id, string name, string email, string password)
+    public static User LoadFromDb(Guid id, string name, string email, string password = null)
     {
         var user = new User(name, email, password)
         {
@@ -79,4 +79,5 @@ public class User
         ValidatePassword(newPassword);
         Password = newPassword;
     }
+
 }

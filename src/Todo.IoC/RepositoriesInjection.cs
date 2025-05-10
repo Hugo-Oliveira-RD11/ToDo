@@ -8,7 +8,7 @@ namespace Todo.IoC
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<ITodoTaskRepository, TodoTaskRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
 
