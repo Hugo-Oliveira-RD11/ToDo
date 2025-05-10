@@ -15,7 +15,8 @@ public class UpdateTaskTitleHandler
 
     public async Task HandleAsync(UpdateTaskTitleCommand command)
     {
-        var task = await _taskHandler.HandleAsync(new GetTaskQuery(id: command.TaskId, userId: command.UserId, title: command.NewTitle));
+        var query = new GetTaskQuery(id: command.TaskId, userId: command.UserId, title: command.NewTitle);
+        var task = await _taskHandler.HandleAsync(query);
 
         if (task is null)
             throw new ArgumentException("Task não encontrada.");

@@ -8,13 +8,16 @@ public class CreateTaskCommand
 {
     public string Goal { get; init; }
     public string Notes { get; init; }
+    public Guid UserId { get; init; }
     public Categories Category { get; init; }
     public bool Done { get; init; } 
     public DueDate CompletationDate { get; init ; }
 
-    public CreateTaskCommand(string goal, string notes, Categories category, bool done, DueDate completationDate)
+    public CreateTaskCommand(string goal, Guid userId,
+        DueDate completationDate, bool done = false, string notes = null, Categories category = Categories.White)
     {
         Goal = goal;
+        UserId = userId;
         Notes = notes;
         Category = category;
         Done = done;

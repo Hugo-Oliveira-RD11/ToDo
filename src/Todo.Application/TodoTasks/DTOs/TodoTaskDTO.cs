@@ -3,7 +3,7 @@ using Todo.Domain.ValueObjects;
 
 namespace Todo.Application.TodoTasks.DTOs;
 
-public class TaskDTO
+public class TodoTaskDTO
 {
     public string Id { get; set; } = string.Empty;
     public string Goal { get; set; } = string.Empty;

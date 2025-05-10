@@ -5,9 +5,9 @@ namespace Todo.Application.TodoTasks.Mappings;
 
 public static class TodoTaskMappingDTO
 {
-    public static TaskDTO ToTaskDto(TodoTask task)
+    public static TodoTaskDTO ToTaskDto(TodoTask task)
     {
-        return new TaskDTO
+        return new TodoTaskDTO
         {
             Id = task.Id,
             Goal = task.Goal,
@@ -18,16 +18,16 @@ public static class TodoTaskMappingDTO
         };
     }
 
-    public static TodoTask ToTask(TaskDTO taskDto, Guid userId)
+    public static TodoTask ToTask(TodoTaskDTO todoTaskDto, Guid userId)
     {
         var task = TodoTask.LoadFromDb(
-            id: taskDto.Id,
+            id: todoTaskDto.Id,
             userId: userId,
-            goal: taskDto.Goal,
-            notes: taskDto.Notes,
-            category: taskDto.Category,
-            completationDate: taskDto.CompletationDate.Value,
-            done: taskDto.Done 
+            goal: todoTaskDto.Goal,
+            notes: todoTaskDto.Notes,
+            category: todoTaskDto.Category,
+            completationDate: todoTaskDto.CompletationDate.Value,
+            done: todoTaskDto.Done 
             );
         
         return task;
