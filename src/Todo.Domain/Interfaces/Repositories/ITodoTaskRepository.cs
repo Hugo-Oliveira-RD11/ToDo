@@ -1,7 +1,7 @@
 using Todo.Domain.Entities;
 
 namespace Todo.Domain.Interfaces.Repositories;
-public interface ITaskRepository
+public interface ITodoTaskRepository
 {
     Task<IEnumerable<TodoTask?>> GetByUserIdPagedAsync(Guid userId, int pageNumber, int pageSize);
     Task<TodoTask?> GetTaskByIdAndUserIdAsync(string id, Guid userId);

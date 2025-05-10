@@ -7,14 +7,14 @@ using Todo.Domain.Shared;
 
 namespace Todo.Application.TodoTasks.Commands.Create;
 
-public class CreateTaskHandler
+public class CreateTodoTaskHandler
 {
-    private readonly ITaskRepository _taskRepository;
-    public CreateTaskHandler(ITaskRepository taskRepository)
+    private readonly ITodoTaskRepository _todoTaskRepository;
+    public CreateTodoTaskHandler(ITodoTaskRepository todoTaskRepository)
     {
-        _taskRepository = taskRepository;
+        _todoTaskRepository = todoTaskRepository;
     }
-    public async Task<Result<TodoTaskDTO>> HandleAsync(CreateTaskCommand command)
+    public async Task<Result<TodoTaskDTO>> HandleAsync(CreateTodoTaskCommand command)
     {
         TodoTask todoTask = new TodoTask(
             goal: command.Goal, 
@@ -23,7 +23,7 @@ public class CreateTaskHandler
             notes: command.Notes, 
             completationDate: command.CompletationDate
             );
-        await _taskRepository.AddAsync(todoTask);
+        await _todoTaskRepository.AddAsync(todoTask);
         var todoTaskDTO = TodoTaskMappingDTO.ToTaskDto(todoTask);
         
         return Result<TodoTaskDTO>.Ok(todoTaskDTO);

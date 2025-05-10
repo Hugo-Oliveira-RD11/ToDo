@@ -4,7 +4,7 @@ using Todo.Domain.ValueObjects;
 
 namespace Todo.Application.TodoTasks.Commands.Create;
 
-public class CreateTaskCommand
+public class CreateTodoTaskCommand
 {
     public string Goal { get; init; }
     public string Notes { get; init; }
@@ -13,7 +13,7 @@ public class CreateTaskCommand
     public bool Done { get; init; } 
     public DueDate CompletationDate { get; init ; }
 
-    public CreateTaskCommand(string goal, Guid userId,
+    public CreateTodoTaskCommand(string goal, Guid userId,
         DueDate completationDate, bool done = false, string notes = null, Categories category = Categories.White)
     {
         Goal = goal;

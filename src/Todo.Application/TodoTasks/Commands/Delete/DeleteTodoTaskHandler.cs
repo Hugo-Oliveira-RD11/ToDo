@@ -7,22 +7,22 @@ namespace Todo.Application.TodoTasks.Commands.Delete;
 
 public class DeleteTodoTaskHandler
 {
-    private readonly ITaskRepository _taskRepository;
-    private readonly GetTaskHandler _taskHandler;
-    public DeleteTodoTaskHandler(ITaskRepository taskRepository, GetTaskHandler taskHandler)
+    private readonly ITodoTaskRepository _todoTaskRepository;
+    private readonly GetTodoTaskHandler _todoTaskHandler;
+    public DeleteTodoTaskHandler(ITodoTaskRepository todoTaskRepository, GetTodoTaskHandler todoTaskHandler)
     {
-        _taskRepository = taskRepository;
-        _taskHandler = taskHandler;
+        _todoTaskRepository = todoTaskRepository;
+        _todoTaskHandler = todoTaskHandler;
     }
     public async Task<Result<TodoTask>> HandleAsync(DeleteTodoTaskCommand command)
     {
-        var query = new GetTaskQuery(id: command.Id,userId: command.UserId);
-        var verify = await  _taskHandler.HandleAsync(query);
+        var query = new GetTodoTaskQuery(id: command.Id,userId: command.UserId);
+        var verify = await  _todoTaskHandler.HandleAsync(query);
         
         if(verify is null)
             return Result<TodoTask>.Fail("task nao foi achado");
 
-        await _taskRepository.DeleteAsync(id: verify.Id);
+        await _todoTaskRepository.DeleteAsync(id: verify.Id);
         
         return Result<TodoTask>.Ok();
     }

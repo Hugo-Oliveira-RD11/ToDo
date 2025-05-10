@@ -6,11 +6,11 @@ using Todo.Infrastructure.Mapping;
 
 namespace Todo.Infrastructure.Repositories;
 
-public class TaskRepository : ITaskRepository
+public class TodoTaskRepository : ITodoTaskRepository
 {
     private readonly IMongoCollection<TodoTaskModel> _taskCollection;
 
-    public TaskRepository(IMongoDatabase database)
+    public TodoTaskRepository(IMongoDatabase database)
     {
         _taskCollection = database.GetCollection<TodoTaskModel>("Tasks");
     }
