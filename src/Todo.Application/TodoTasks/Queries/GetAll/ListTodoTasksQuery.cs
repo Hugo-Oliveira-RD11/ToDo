@@ -1,12 +1,12 @@
-namespace Todo.Application.Queries;
+namespace Todo.Application.TodoTasks.Queries.GetAll;
 
-public class ListTasksQuery
+public class ListTodoTasksQuery
 {
     public Guid UserId { get; init; }
     public int PageNumber { get; init; }
     public int PageSize { get; init;}
 
-    public ListTasksQuery(Guid userId ,int page = 1, int pageSize = 20)
+    public ListTodoTasksQuery(Guid userId ,int page = 1, int pageSize = 20)
     {
         UserId = userId;
         PageNumber = page < 1 ? 1 : page;

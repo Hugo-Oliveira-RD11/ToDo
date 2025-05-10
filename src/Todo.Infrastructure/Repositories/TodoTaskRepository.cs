@@ -6,37 +6,42 @@ using Todo.Infrastructure.Mapping;
 
 namespace Todo.Infrastructure.Repositories;
 
-public class TaskRepository : ITaskRepository
+public class TodoTaskRepository : ITodoTaskRepository
 {
     private readonly IMongoCollection<TodoTaskModel> _taskCollection;
 
-    public TaskRepository(IMongoDatabase database)
+    public TodoTaskRepository(IMongoDatabase database)
     {
         _taskCollection = database.GetCollection<TodoTaskModel>("Tasks");
     }
 
-    public async Task<TodoTask> GetTaskByIdAsync(string id)
+    public Task<IEnumerable<TodoTask?>> GetByUserIdPagedAsync(Guid userId, int pageNumber, int pageSize)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<TodoTask?> GetTaskByIdAndUserIdAsync(string id, Guid userId)
     {
         var taskModel = await _taskCollection
-            .Find(t => t.Id == id)
+            .Find(t => t.Id == id && t.UserId == userId)
             .FirstOrDefaultAsync();
 
         return taskModel != null ? TaskMapping.ToTask(taskModel) : null;
     }
 
-    public async Task<TodoTask?> GetTaskByGoalAsync(string goal)
+    public async Task<TodoTask?> GetTaskByGoalAndUserIdAsync(string goal, Guid userId)
     {
         var taskModel = await _taskCollection
-            .Find(t => t.Goal == goal)
+            .Find(t => t.Goal == goal && t.UserId == userId)
             .FirstOrDefaultAsync();
 
         return taskModel != null ? TaskMapping.ToTask(taskModel) : null;
     }
 
-    public async Task<IEnumerable<TodoTask>> GetAllAsync()
+    public async Task<IEnumerable<TodoTask>> GetAllAsync(Guid userId)
     {
         var taskModels = await _taskCollection
-            .Find(t => true)
+            .Find(t => true && t.UserId == userId)
             .ToListAsync();
 
         return taskModels.Select(TaskMapping.ToTask);

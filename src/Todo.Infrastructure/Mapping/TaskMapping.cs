@@ -24,11 +24,12 @@ public static class TaskMapping
     public static TodoTask ToTask(TodoTaskModel taskModel)
     {
         return new TodoTask(
-            taskModel.UserId,
-            taskModel.Goal,
-            taskModel.Notes,
-            taskModel.Category,
-            taskModel.CompletationDate.HasValue ? new DueDate(taskModel.CompletationDate.Value) : null
+            userId: taskModel.UserId,
+            goal: taskModel.Goal,
+            notes: taskModel.Notes,
+            category: taskModel.Category,
+            completationDate: taskModel.CompletationDate.HasValue ? new DueDate(taskModel.CompletationDate.Value) : null,
+            done: taskModel.Done
         );
     }
 }

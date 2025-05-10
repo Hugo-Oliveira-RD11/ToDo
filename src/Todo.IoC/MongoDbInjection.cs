@@ -36,7 +36,7 @@ public static class MongoDbInjection
             return client.GetDatabase(databaseName);
         });
 
-        services.AddScoped<ITaskRepository, TaskRepository>();
+        services.AddScoped<ITodoTaskRepository, TodoTaskRepository>();
 
         return services;
     }
