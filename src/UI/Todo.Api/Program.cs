@@ -1,3 +1,7 @@
+using Todo.Application.TodoTasks.Module;
+using Todo.Application.Users.Module;
+using Todo.Infrastructure.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddMongoDb(builder.Configuration);
+builder.Services.AddPostgresDb(builder.Configuration);
+builder.Services.AddRepositories();
+
+builder.Services.AddUserModele();
+builder.Services.AddTodoTaskModule();
 
 var app = builder.Build();
 
