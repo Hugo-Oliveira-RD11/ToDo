@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Todo.Infrastructure.Data;
 
-namespace Todo.IoC;
+namespace Todo.Infrastructure.DependencyInjection;
 
 public static class PostgresInjection
 {

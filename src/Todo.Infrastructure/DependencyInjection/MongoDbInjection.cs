@@ -6,14 +6,14 @@ using Todo.Domain.Interfaces.Repositories;
 using Todo.Infrastructure.Repositories;
 
 
-namespace Todo.IoC;
+namespace Todo.Infrastructure.DependencyInjection;
 
 public static class MongoDbInjection
 {
     public static IServiceCollection AddMongoDb(this IServiceCollection services, IConfiguration configuration)
     {
         var section = configuration.GetSection("ConnectionsDB:TaskDatabase");
-
+        
         var mongoDbSettings = section.Get<TasksModelDatabaseSettings>()
             ?? throw new InvalidOperationException("As configurações do MongoDB não foram encontradas no appsettings.json.");
 
