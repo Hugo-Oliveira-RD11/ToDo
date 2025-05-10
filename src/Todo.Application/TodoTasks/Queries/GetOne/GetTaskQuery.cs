@@ -1,4 +1,4 @@
-namespace Todo.Application.Queries;
+namespace Todo.Application.TodoTasks.Queries.GetOne;
 
 public class GetTaskQuery
 {

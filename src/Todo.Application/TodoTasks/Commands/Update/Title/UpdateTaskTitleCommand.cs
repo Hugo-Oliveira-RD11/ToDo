@@ -1,4 +1,4 @@
-namespace Todo.Application.Commands.Task;
+namespace Todo.Application.TodoTasks.Commands.Update.Title;
 
 public class UpdateTaskTitleCommand
 {

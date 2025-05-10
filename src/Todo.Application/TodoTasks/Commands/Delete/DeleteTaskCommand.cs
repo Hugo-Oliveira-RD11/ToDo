@@ -1,5 +1,5 @@
 
-namespace Todo.Application.Commands.Task;
+namespace Todo.Application.TodoTasks.Commands.Delete;
 
 public class DeleteTaskCommand
 {

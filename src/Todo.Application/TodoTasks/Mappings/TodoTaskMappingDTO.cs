@@ -1,7 +1,7 @@
-using Todo.Application.DTOs;
+using Todo.Application.TodoTasks.DTOs;
 using Todo.Domain.Entities;
 
-namespace Todo.Application.Mapping;
+namespace Todo.Application.TodoTasks.Mappings;
 
 public static class TodoTaskMappingDTO
 {

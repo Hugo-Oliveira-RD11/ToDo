@@ -1,9 +1,7 @@
-
 using Todo.Domain.Enums;
+using Todo.Domain.ValueObjects;
 
-using DueDate = Todo.Domain.ValueObjects.DueDate;
-
-namespace Todo.Application.DTOs;
+namespace Todo.Application.TodoTasks.DTOs;
 
 public class TaskDTO
 {

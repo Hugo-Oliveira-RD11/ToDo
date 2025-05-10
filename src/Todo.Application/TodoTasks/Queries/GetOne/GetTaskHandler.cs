@@ -1,13 +1,12 @@
 using Todo.Domain.Interfaces.Repositories;
 using Todo.Domain.Entities;
-using Todo.Application.Queries;
 
-namespace Todo.Application.Handlers.Tasks;
-public class GetTaskQueryHandler
+namespace Todo.Application.TodoTasks.Queries.GetOne;
+public class GetTaskHandler
 {
     private readonly ITaskRepository _taskRepository;
 
-    public GetTaskQueryHandler(ITaskRepository taskRepository)
+    public GetTaskHandler(ITaskRepository taskRepository)
     {
         _taskRepository = taskRepository;
     }

@@ -2,7 +2,7 @@
 using Todo.Domain.Enums;
 using Todo.Domain.ValueObjects;
 
-namespace Todo.Application.Commands.Task;
+namespace Todo.Application.TodoTasks.Commands.Create;
 
 public class CreateTaskCommand
 {
