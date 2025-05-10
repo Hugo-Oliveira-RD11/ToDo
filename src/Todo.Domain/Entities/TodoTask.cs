@@ -17,7 +17,7 @@ public class TodoTask
     public TodoTask() { } // Para o EF
 
     public TodoTask(Guid userId, string goal, Categories category, DueDate completationDate = null,
-        string? notes = null)
+        string? notes = null, bool done = false)
     {
         ValidateGoal(goal);
         ValidateNotes(notes);
@@ -25,6 +25,7 @@ public class TodoTask
         Id = Guid.NewGuid().ToString();
         UserId = userId;
         Goal = goal;
+        Done = done;
         Notes = notes;
         Category = category;
         CompletationDate = completationDate;
