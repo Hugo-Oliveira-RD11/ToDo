@@ -1,6 +1,54 @@
 {
   "lockfile_version": "1",
   "packages": {
+    "dotnet-ef@9.0.2": {
+      "last_modified": "2025-03-23T14:04:58Z",
+      "resolved": "github:NixOS/nixpkgs/f3a2a0601e9669a6e38af25b46ce6c4563bcb6da#dotnet-ef",
+      "source": "devbox-search",
+      "version": "9.0.2",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/v36xy5vy900l4d6bgvivazq64vax3rcf-dotnet-ef-9.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/v36xy5vy900l4d6bgvivazq64vax3rcf-dotnet-ef-9.0.2"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/kh6yxaxb191vl6ga60dmihzh8kc697h5-dotnet-ef-9.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/kh6yxaxb191vl6ga60dmihzh8kc697h5-dotnet-ef-9.0.2"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/4gx158qpp9wkqhg2hhysms59zqqj5f9h-dotnet-ef-9.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/4gx158qpp9wkqhg2hhysms59zqqj5f9h-dotnet-ef-9.0.2"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ha754k76s01pmq4dh66ni204hjdnyy6a-dotnet-ef-9.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/ha754k76s01pmq4dh66ni204hjdnyy6a-dotnet-ef-9.0.2"
+        }
+      }
+    },
     "dotnet-sdk_9@9.0.202": {
       "last_modified": "2025-04-10T20:20:34Z",
       "resolved": "github:NixOS/nixpkgs/d19cf9dfc633816a437204555afeb9e722386b76#dotnet-sdk_9",
