@@ -1,11 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
-
 using Todo.Application.Users.Commands.Create;
 using Todo.Application.Users.Commands.Delete;
 using Todo.Application.Users.Commands.Update;
 using Todo.Application.Users.Queries.GetUser;
 
-namespace Todo.Application.Users.Module;
+namespace Todo.Api.Modules;
 
 public static class UserModule
 {

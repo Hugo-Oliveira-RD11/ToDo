@@ -12,7 +12,7 @@ public static class MongoDbInjection
 {
     public static IServiceCollection AddMongoDb(this IServiceCollection services, IConfiguration configuration)
     {
-        var section = configuration.GetSection("ConnectionsDB:TaskDatabase");
+        var section = configuration.GetSection("ConnectionsDB:TasksDatabase");
         
         var mongoDbSettings = section.Get<TasksModelDatabaseSettings>()
             ?? throw new InvalidOperationException("As configurações do MongoDB não foram encontradas no appsettings.json.");
