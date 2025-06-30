@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using HealthChecks.MongoDb;
 using HealthChecks.NpgSql;
 
+using MongoDB.Driver;
+
 using Todo.Api.Modules;
 using Todo.Infrastructure.Data;
 using Todo.Infrastructure.DependencyInjection;
@@ -27,12 +29,9 @@ builder.Services.AddHealthChecks()
         connectionString: builder.Configuration["ConnectionsDB:UserConnection"]!,
         name: "Postgres",
         tags: new[] { "database", "sql" })
-    .HealthChecks.MongoDb.MongoDbHealthCheckBuilderExtensions.AddMongoDb(
-        builder.Configuration["ConnectionsDB:TasksDatabase"]!,
-        name: "MongoDB",
-        timeout: TimeSpan.FromSeconds(5),
-        tags: new[] { "database", "nosql" }
-    );
+    .AddMongoDb( sp => new MongoClient(builder.Configuration["ConnectionsDB:TasksDatabase:ConnectionString"]),
+        name: "TaskDB-Mongo"
+        );
 
 var app = builder.Build();
 
@@ -60,6 +59,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseHealthChecks("/health");
 
 app.Run();

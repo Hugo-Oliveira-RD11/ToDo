@@ -18,9 +18,6 @@ services:
       replicas: 2
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionsDB__UserConnection=Host=postgres;Port=5432;Database=UsersDB;Username=tests;Password=test12345
-      - ConnectionsDB__TasksDatabase=mongodb://mongo:27017
-      - ConnectionsDB__RefreshTokenDB=redis_token,password=redisRefresh
       - ASPNETCORE_URLS=http://+:8080
     depends_on:
       - postgres
