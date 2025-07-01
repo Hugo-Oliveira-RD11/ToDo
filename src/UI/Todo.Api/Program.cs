@@ -59,6 +59,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseHealthChecks("/health");
+app.MapHealthChecks(
+    "/v1/health",new HealthCheckOptions()
+    {
+        Predicate = _ => true,
+        ReponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
 app.Run();
