@@ -3,17 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend.tests", "backend.tests", "{C0C6E044-CB20-653A-D6C2-4CA8FE87111B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "backend.tests\tests\tests.csproj", "{06663740-CB0F-4BC6-923D-98AD8596243E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Domain", "src\Todo.Domain\Todo.Domain.csproj", "{96E30067-A6C6-44F4-A6E1-68A486EDEF62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Application", "src\Todo.Application\Todo.Application.csproj", "{65B6BBCC-B0CC-42EF-820B-3BF2320126E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Infrastructure", "src\Todo.Infrastructure\Todo.Infrastructure.csproj", "{73142574-7E0B-4523-972E-6EDF9B3BC1F8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.IoC", "src\Todo.IoC\Todo.IoC.csproj", "{51A52618-0AEF-4D02-BECA-931B849B0F43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Api", "src\UI\Todo.Api\Todo.Api.csproj", "{5C9FBFF7-1769-4122-84A2-EA9DF4887BCE}"
 EndProject
@@ -27,18 +21,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|x64.Build.0 = Debug|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Debug|x86.Build.0 = Debug|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|x64.ActiveCfg = Release|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|x64.Build.0 = Release|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|x86.ActiveCfg = Release|Any CPU
-		{06663740-CB0F-4BC6-923D-98AD8596243E}.Release|x86.Build.0 = Release|Any CPU
 		{96E30067-A6C6-44F4-A6E1-68A486EDEF62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{96E30067-A6C6-44F4-A6E1-68A486EDEF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96E30067-A6C6-44F4-A6E1-68A486EDEF62}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -75,18 +57,6 @@ Global
 		{73142574-7E0B-4523-972E-6EDF9B3BC1F8}.Release|x64.Build.0 = Release|Any CPU
 		{73142574-7E0B-4523-972E-6EDF9B3BC1F8}.Release|x86.ActiveCfg = Release|Any CPU
 		{73142574-7E0B-4523-972E-6EDF9B3BC1F8}.Release|x86.Build.0 = Release|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Debug|x64.Build.0 = Debug|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Debug|x86.Build.0 = Debug|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Release|Any CPU.Build.0 = Release|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Release|x64.ActiveCfg = Release|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Release|x64.Build.0 = Release|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Release|x86.ActiveCfg = Release|Any CPU
-		{51A52618-0AEF-4D02-BECA-931B849B0F43}.Release|x86.Build.0 = Release|Any CPU
 		{5C9FBFF7-1769-4122-84A2-EA9DF4887BCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C9FBFF7-1769-4122-84A2-EA9DF4887BCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C9FBFF7-1769-4122-84A2-EA9DF4887BCE}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -104,6 +74,5 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{06663740-CB0F-4BC6-923D-98AD8596243E} = {C0C6E044-CB20-653A-D6C2-4CA8FE87111B}
 	EndGlobalSection
 EndGlobal

@@ -2,8 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Todo.Domain.Interfaces.Repositories;
 using Todo.Infrastructure.Repositories;
 
-namespace Todo.IoC
-{
+namespace Todo.Infrastructure.DependencyInjection;
     public static class RepositoryInjection
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
@@ -15,4 +14,3 @@ namespace Todo.IoC
             return services;
         }
     }
-}
