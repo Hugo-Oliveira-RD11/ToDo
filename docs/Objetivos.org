@@ -1,0 +1,44 @@
+#+title: objetivos do projeto
+#+author: Hugo de Oliveira Resende
+#+date: <2026-02-14 sáb>
+
+* descricao
+Mesmo sabendo que existem muito apps de ToDos, eu prefiri fazer o o meu, nao para "dominar o mundo", mas para aprender arquitetura.
+Neste caso, meu foco e aprender o clean arch. Eu tambem me deixei levar para CQRS, mas irei tirar pois to adicionando dificuldade alem do normal.
+
+* Objetivos de aprendizagem
+** Domain [0/3]
+- [ ] o que sao... [0/5]
+  - [ ] entities
+  - [ ] enums
+  - [ ] ValueObjects
+  - [ ] Interfaces
+  - [ ]
+- [ ] Como usar cada um
+- [ ] ter exemplos nesta aplicacao
+** Application
+- [ ] como que o domain vai conversar com as outras partes da aplicacao
+- [ ]
+** infrastructure
+- [ ] Como faz para nao ser fixo ao um banco de dados?
+- [ ] como faz para nao ser fixo a um framework?
+** UI
+- aqui e basicamente uma api normal
+  
+* objetivos do app
+sao objetivos de criacao, codigo mesmo, o que o codigo precisa execultar.
+** MVP
+***  Tarefas
+- [ ] criar
+- [ ] editar
+- [ ] excluir
+- [ ] marcar como concluida
+- [ ] listar tarefas
+*** Organizacao
+- [ ] ter prioridade
+- [ ] separar por listar/projetos
+*** usuario
+- [ ] cadastro
+- [ ] delecao da conta
+- [ ] two factor
+- [ ] microsft e google account
