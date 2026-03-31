@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.MongoDb" />
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="MongoDB.Driver" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
