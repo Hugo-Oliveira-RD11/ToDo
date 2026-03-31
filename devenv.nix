@@ -7,6 +7,9 @@
   # https://devenv.sh/packages/
   packages = with pkgs;
     [
+      podman
+      podman-compose
+      pods
       git
       csharp-ls
       (dotnetCorePackages.combinePackages [
@@ -21,11 +24,10 @@
     #   enable = true;
     #   package = pkgs.dotnet-sdk_9;
     #   lsp.enable = true;
-    #   lsp.package = pkgs.omnisharp-roslyn;
     # };
     nix ={
       enable = true;
-      #lsp.enable = true;
+      lsp.enable = true;
     };
   };
 
@@ -35,17 +37,22 @@
   # https://devenv.sh/services/
   # services.postgres.enable = true;
 
+  # tenho um problema com o ip6
+  env = {
+    DOTNET_SYSTEM_NET_DISABLEIPV6 = "1";
+  };
+
   # https://devenv.sh/scripts/
   # scripts.hello.exec = ''
   #   echo hello from $GREET
   # '';
 
   # https://devenv.sh/basics/
-  enterShell = ''
-    # hello         # Run scripts directly
-    # git --version # Use packages
-    dotnet --list-sdks
-  '';
+  # enterShell = ''
+  #   # hello         # Run scripts directly
+  #   # git --version # Use packages
+  #   dotnet --list-sdks
+  # '';
 
   # https://devenv.sh/tasks/
   # tasks = {
